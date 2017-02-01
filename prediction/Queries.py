@@ -15,9 +15,16 @@ Base class for a Divvy query
 """
 class DivvyQuery():
 
+    expected_args = []
+
     def __init__(self, spark_interface):
         self.spark_interface = spark_interface
         self.spark_interface.data.createOrReplaceTempView("divvyData")
+
+    def check_args(self, args):
+        for exp in self.expected_args:
+            if exp not in args:
+                raise ArgMissingError("Expected arg: " + exp)
 
     def run(self, args):
         raise UndefinedQueryError()
@@ -31,21 +38,19 @@ Expects args to run:
     - end_hour: Integer between 0 and 24
 """
 class AverageBikesByHour(DivvyQuery):
+
+    expected_args = ["station", "start_hour", "end_hour"]
+
     def run(self, args):
-        # args check
-        expected_args = ["station", "start_hour", "end_hour"]
-        for exp in expected_args:
-            if exp not in args:
-                raise ArgMissingError("Expected arg: " + exp)
+        self.check_args(args)
 
         startT, endT = args["start_hour"], args["end_hour"]
-
         aveQuery = "HOUR(Timestamp) BETWEEN {} and {}".format(startT,endT)
         aveAvailable = self.spark_interface.sqlc.sql("SELECT * FROM divvyData WHERE Station_Name LIKE '{}' AND {}".format(args["station"], aveQuery))
         return aveAvailable.groupBy("Station_Name").avg("Available_Bikes")
 
 """
-Query that gets the average number of bikes at a station during a given time window
+Query that gets the average number of bikes at a station during a given time window and day of week
 
 Expects args to run:
     - station: String of a valid station name
@@ -54,12 +59,11 @@ Expects args to run:
     - day: String of a three-letter day (e.g. Mon, Tue, Wed)
 """
 class AverageBikesByDayAndHour(DivvyQuery):
+
+    expected_args = ["station", "start_hour", "end_hour", "day"]
+
     def run(self, args):
-        # args check
-        expected_args = ["station", "start_hour", "end_hour", "day"]
-        for exp in expected_args:
-            if exp not in args:
-                raise ArgMissingError("Expected arg: " + exp)
+        self.check_args(args)
 
         locSpec = "Station_Name LIKE '{}'".format(args["station"])
         timeSpec = "HOUR(Timestamp) BETWEEN {} and {} ".format(args["start_hour"],args["end_hour"])
