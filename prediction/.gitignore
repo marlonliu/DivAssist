@@ -1,0 +1,3 @@
+*.pyc
+Divvy_Bicycle_Stations_-_Historical.csv
+divvyData.parquet/*
