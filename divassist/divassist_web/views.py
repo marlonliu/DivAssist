@@ -16,30 +16,30 @@ def register(request):
             password=form.cleaned_data['password1'],
             email=form.cleaned_data['email']
             )
-            return HttpResponseRedirect('/register/success/')
+            return HttpResponseRedirect('/registration/select_home_station/')
     else:
         form = RegistrationForm()
-    variables = RequestContext(request, {
-    'form': form
-    })
  
     return render_to_response(
     'registration/register.html',
-    variables,
-    )
- 
-def register_success(request):
-    return render_to_response(
-    'registration/success.html',
+    RequestContext(request, {
+		'form': form
+	}),
     )
  
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
- 
-@login_required
-def home(request):
+
+def select_home_station(request):
     return render_to_response(
-    'home.html',
+    'registration/select_home_station.html',
+    { 'user': request.user }
+    )
+
+@login_required
+def home_page(request):
+    return render_to_response(
+    'home_page.html',
     { 'user': request.user }
     )
