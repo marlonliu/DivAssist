@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,6 +26,12 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+      os.path.join(os.path.dirname(__file__), 'templates'),
+)
 
 # Application definition
 
@@ -36,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'divassist_web',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,11 +61,16 @@ WSGI_APPLICATION = 'divassist.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
+ 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': BASE_DIR + '/loginapp.sqlite',  # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',   # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',   # Set to empty string for default.
     }
 }
 
@@ -74,6 +86,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+import django.contrib.auth
+django.contrib.auth.LOGIN_URL = '/'
 
 
 # Static files (CSS, JavaScript, Images)
