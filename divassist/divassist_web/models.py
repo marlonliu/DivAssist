@@ -11,7 +11,7 @@ class UserProfile(models.Model):
     home_station_3 = models.ForeignKey(Station)
     
     def __str__(self):
-        return self.username
+        return self.user
     
 class Ride(models.Model):
     title_text = models.CharField(max_length=200)
