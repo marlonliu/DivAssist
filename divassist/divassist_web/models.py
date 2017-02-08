@@ -47,3 +47,11 @@ class Rating(models.Model):
     ride = models.ForeignKey(Ride)
     rating = IntegerField(default=0)
     owner = models.ForeignKey(User)
+
+# A prediction belongs to a single station
+# A station can have many predictions (based on days / times)
+class Prediction(models.Model):
+    bikes_available = models.FloatField() # the prediction
+    day_of_week = models.CharField(max_length=3) # 3-letter days
+    start_hour = models.IntegerField() # start hour of the prediction NOTE: this implementation assumes predictions are 1 hour windows
+    station = models.ForeignKey(Station) # station that this prediction is for
