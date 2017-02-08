@@ -11,7 +11,7 @@ class UserProfile(models.Model):
     home_station_3 = models.ForeignKey(Station)
     
     def __str__(self):
-        return self.username
+        return self.user
     
 class Ride(models.Model):
     title_text = models.CharField(max_length=200)
@@ -35,18 +35,37 @@ class Stop(models.Model):
     station = models.ForeignKey(Station)
 
 # A review has a comment an owner and a date
-class Review(models.Model):
+class Ride_Review(models.Model):
     ride = models.ForeignKey(Ride)
+    comment = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date commented')
+    owner = models.ForeignKey(User)
+
+# A review has a comment an owner and a date
+class Station_Review(models.Model):
+    station = models.ForeignKey(Station)
     comment = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date commented')
     owner = models.ForeignKey(User)
 
 # Every user should only rate once
 # Each should be associated with one ride
-class Rating(models.Model):
+class Ride_Rating(models.Model):
     ride = models.ForeignKey(Ride)
     rating = IntegerField(default=0)
     owner = models.ForeignKey(User)
+
+# Every user should only rate once
+# Each should be associated with one ride
+class Station_Rating(models.Model):
+    station = models.ForeignKey(Station)
+    rating = IntegerField(default=0)
+    owner = models.ForeignKey(User)
+
+class Station(models.Model):
+    station_id = models.IntegerField()
+    station_name = models.CharField(max_length=36)
+    station_address = models.CharField(max_length=200)
 
 # A prediction belongs to a single station
 # A station can have many predictions (based on days / times)
