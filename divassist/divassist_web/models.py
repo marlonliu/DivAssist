@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    department = models.CharField(max_length=100)
     email = models.EmailField()
     home_station_1 = models.ForeignKey(Station)
     home_station_2 = models.ForeignKey(Station)
