@@ -1,19 +1,18 @@
-from django.db import models
+Bfrom django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Station(models.Model):
-    station_id = models.IntegerField()
     station_name = models.CharField(max_length=36)
     station_address = models.CharField(max_length=200)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField()
-    home_station_1 = models.ForeignKey(Station)
-    home_station_2 = models.ForeignKey(Station)
-    home_station_3 = models.ForeignKey(Station)
+    home_station_1 = models.ForeignKey(Station, related_name='home1')
+    home_station_2 = models.ForeignKey(Station, related_name='home2')
+    home_station_3 = models.ForeignKey(Station, related_name='home3')
     
     def __str__(self):
         return self.user
