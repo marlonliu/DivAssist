@@ -7,7 +7,7 @@ from .models import Station, UserProfile, Ride, Tag, Stop, Ride_Review, Station_
 class RideTests(TestCase):
     def test_ride_creation(self):
         test_ride = Ride(title_text = "The Trip to Grandma's House", desc_text="It's so fun though guys!", s_neighborhood="Hyde Park", e_neighborhood="West Loop", difficulty=10)
-        self.assertIs(Ride(title_text="", desc_text="", False))
+        self.assertIs(Ride(title_text="", desc_text=""), False)
         r = Ride(title_text="Title", desc_text="Description", s_neighborhood="Hyde Park", e_neighborhood="West Loop", pub_date=timezone.now(), owner=UserProfile(), difficulty=9)
         r.save()
         self.assertIs(r.setDifficulty(11), False)
@@ -21,4 +21,4 @@ class RideTests(TestCase):
         self.assertIs(r.hasTag(tag1), True)
         tag2 = Tag('Scenery')
         tag2.save()
-        self.assertIs(r.hasTag(tag2, False)
+        self.assertIs(r.hasTag(tag2, False))
