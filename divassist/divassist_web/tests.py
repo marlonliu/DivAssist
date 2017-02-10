@@ -80,23 +80,39 @@ class UserAuthenticationTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/home_page/')
 
+    def test_logout(self): 
+        # create a user for testing
+        user = User()
+        user.username = 'test'
+        user.set_password('pass')
+        user.save()
+
+        test_client = Client()
+        test_client.login(username='test', password='pass')
+        response = test_client.get('/home_page/')
+        self.assertEqual(response.status_code, 200)
+        test_client.get('/logout/')
+        # client should not be able to access home_page directly after logout
+        response = test_client.get('/home_page/')
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/accounts/login/?next=/home_page/')
 
 
-# class RideTests(TestCase):
-#     def test_ride_creation(self):
-#         test_ride = Ride(title_text = "The Trip to Grandma's House", desc_text="It's so fun though guys!", s_neighborhood="Hyde Park", e_neighborhood="West Loop", difficulty=10)
-#         self.assertIs(Ride(title_text="", desc_text=""), False)
-#         r = Ride(title_text="Title", desc_text="Description", s_neighborhood="Hyde Park", e_neighborhood="West Loop", pub_date=timezone.now(), owner=UserProfile(), difficulty=9)
-#         r.save()
-#         self.assertIs(r.setDifficulty(11), False)
-#         self.assertIs(r.getDifficulty(), 9)
-#         self.assertIs(r.setDifficulty(-12), False)
-#         self.assertIs(r.setTitle(""), False)
-#         tag1 = Tag('Hilly')
-#         tag1.save()
-#         tag1.rides.add(r)
-#         self.assertIs(r.getTags(), ['Hilly'])
-#         self.assertIs(r.hasTag(tag1), True)
-#         tag2 = Tag('Scenery')
-#         tag2.save()
-#         self.assertIs(r.hasTag(tag2, False))
+class RideTests(TestCase):
+    def test_ride_creation(self):
+        test_ride = Ride(title_text = "The Trip to Grandma's House", desc_text="It's so fun though guys!", s_neighborhood="Hyde Park", e_neighborhood="West Loop", difficulty=10)
+        self.assertIs(Ride(title_text="", desc_text=""), False)
+        r = Ride(title_text="Title", desc_text="Description", s_neighborhood="Hyde Park", e_neighborhood="West Loop", pub_date=timezone.now(), owner=UserProfile(), difficulty=9)
+        r.save()
+        self.assertIs(r.setDifficulty(11), False)
+        self.assertIs(r.getDifficulty(), 9)
+        self.assertIs(r.setDifficulty(-12), False)
+        self.assertIs(r.setTitle(""), False)
+        tag1 = Tag('Hilly')
+        tag1.save()
+        tag1.rides.add(r)
+        self.assertIs(r.getTags(), ['Hilly'])
+        self.assertIs(r.hasTag(tag1), True)
+        tag2 = Tag('Scenery')
+        tag2.save()
+        self.assertIs(r.hasTag(tag2, False))
