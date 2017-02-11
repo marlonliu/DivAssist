@@ -116,3 +116,53 @@ class RideTests(TestCase):
         tag2 = Tag('Scenery')
         tag2.save()
         self.assertIs(r.hasTag(tag2, False))
+        # test stations
+        station = Station("Ellis", "59th and Ellis")
+        station.save()
+        s = Stop(ride=r, number=1, station=station)
+        s.save()
+        self.assertIs(Stop.objects.get(ride=r), [s])
+        self.assertIs(Stop(ride=r, number=1, station=station), False) # you cannot have multiple stops with the same number
+        self.assertIs(Stop(ride=r, number=3, station=station), False) # you cannot skip a number
+        self.assertIs(Stop(ride=r, number=2, station=station), True) # you can have the same stop multiple times
+        self.assertIs(Ride_Review.objects.get(ride=r), [])
+        rr1 = Ride_Review(ride=r, comment="This was great", pub_date=timezone.now())
+        rr1.save()
+        user = User()
+        user.username = 'test'
+        user.set_password('pass')
+        user.save()
+
+        self.assertIs(Ride_Review.objects.get(ride=r), [rr1])
+        self.assertIs(Ride_Rating(ride=r, rating=11, owner=u1), False)
+        self.assertIs(Ride_Rating(ride=r, rating=-1, owner=u1), False)
+        self.assertIs(Ride_Rating(ride=r, rating=4, owner=u1), True)
+        rating = Ride_Rating(ride=r, rating=4, owner=u1)
+        rating.save()
+        self.assertIs(r.averageRating(), 4)
+    def test_stations(self):
+        station = Station("Ellis", "59th and Ellis")
+        station.save()
+        user = User()
+        user.username = 'test'
+        user.set_password('pass')
+        user.save()
+        u1 = UserProfile(user=user, email="me@me.com")
+        u1.save()
+        st = Station_Rating(station=station, rating=7, owner=u1)
+        st.save()
+        st1 = Station_Rating(station=station, rating=2, owner=u1)
+        st1.save()
+        self.assertIs(station.averageRating(), 2) # it should overwrite
+        self.assertIs(Station_Rating(station=station, rating=22, owner=u1), False)
+        self.assertIs(Station_Rating(station=station, rating=-3, owner=u1), False)
+        self.assertIs(Station_Rating(station=station, rating=3, owner=u1), True)
+
+        # Station Reviews
+        st = Station_Review(station=station, comment="LOUSY", pub_date=timezone.now(), owner=u1)
+        st.save()
+        st1 = Station_Review(station=station, comment="AMAZING", pub_date=timezone.now(), owner=u1)
+        st1.save()
+        self.assertIs(Station_Review.object.filter(station=station), [st, st1]) # it should not overwrite
+        self.assertIs(Station_Review(station=station, comment="THE BEST", pub_date=timezone.now(), owner=u1), True)
+
