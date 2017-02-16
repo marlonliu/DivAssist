@@ -1,13 +1,43 @@
 {% extends "base.html" %}
-{% block title %}Registration{% endblock %}
-{% block head %}Registration{% endblock %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+{% block extra-css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/login.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/register.css' %}" />
+
+    <style>
+        body {
+            background: url({% static 'divassist_web/img_src/register_back.jpg' %}) no-repeat center center fixed;
+        }
+    </style>
+{% endblock %}
 {% block content %}
-    <form method="post" action=".">
-        {% csrf_token %}
-        <table border="0">
-            {{ form.as_table }}
-        </table>
-        <input type="submit" value="Register" />
-    </form>
-    <a href="/">Login</a>
+    <div id="main-container">
+        <div id="form-container">
+            <p class="title-font-dark">Sign up.</p>
+            {% if form.errors %}
+            <!-- TODO: This to be handled nicely. -->
+            <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+            <form method="post" action=".">{% csrf_token %}
+                <table>
+                    <tr><th><label for="id_username">Username</label></th><td>{{ form.username }}</td></tr>
+                    <tr><th><label for="id_email">Email</label></th><td>{{ form.email }}</td></tr>
+                    <tr><th><label for="id_email">Password</label></th><td>{{ form.password1 }}</td></tr>
+                    <tr><th><label for="id_email">Password (again)</label></th><td>{{ form.password2 }}</td></tr>
+                </table>
+                <button id="submit-button" type="submit">Register</button>
+                    <input type="hidden" name="next" value="/home_page" />
+            </form>
+            <p style="margin-top: 0.5em;">Having an account? <a href="/">Login</a> now!</p>
+        </div>
+        <div id="pitch-container"> 
+        <!-- TODO: This div under development. -->
+        </div>
+    </div>
+{% endblock %}
+    
+{% block extra-js %}
+    <script src="{% static 'divassist_web/login.js' %}"></script>
 {% endblock %}

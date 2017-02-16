@@ -1,36 +1,40 @@
 {% load static %}
 
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en-US">
     <head>
-        <link rel="stylesheet" type="text/css" href="{% static 'general.css' %}" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass:400" rel="stylesheet">
         <title>DivAssist | {% block title %}{% endblock %}</title>
+        <!-- Include the general style sheet. -->
+        <link rel="stylesheet" type="text/css" href="{% static 'general.css' %}" />
+        <!-- Include font files from Google Fonts. -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass:400" rel="stylesheet">
+        <!-- Include  -->
+        {%block extra-css %}{% endblock %}
     </head>
     <body>
         <div id="nav">
-            <div id="logo">
+            <a href="/"><div class="logo">
                 Di<span class="divvy_blue">v</span>A<span class="divvy_blue">ss</span>ist
-            </div>
+            </div></a>
         </div>
         <div id="padding-block"></div>
         {% block content %}{% endblock %}
 
         <div id="footer">
             <div class="footer-sec">
-                <div class="footer-title">Follow Us</div>
+                <div class="title-font-white">Follow Us</div>
                 <div id="social-media">
-                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_fb.png' %}" /></a>
-                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_inst.png' %}" /></a>
-                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_twit.png' %}" /></a>
+                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_fb.png' %}" alt="Facebook Logo"/></a>
+                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_inst.png' %}"  alt="Instagram Logo"/></a>
+                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_twit.png' %}"  alt="Twitter Logo"/></a>
                 </div>
             </div>
             <div class="footer-sec">
-                <div class="footer-title">Contact us</div>
+                <div class="title-font-white">Contact us</div>
                 <p>divassist@uchicago.edu</p>
             </div>
             <div class="footer-sec" style="float: right; padding: 0;">
-                <div id="logo">
+                <div class="logo">
                     Di<span class="divvy_blue">v</span>A<span class="divvy_blue">ss</span>ist
                 </div>
                 <p>&copy; <span id="cur-year">2017</span> Project DivAssist</p>
@@ -41,4 +45,8 @@
 
         </div>
     </body>
+
+    <!-- Include jQuery. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    {% block extra-js %}{% endblock %}
 </html>
