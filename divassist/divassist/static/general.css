@@ -16,7 +16,7 @@ body, p, div, img, a {
     z-index: 10;
 }
 
-#logo {
+.logo {
     font-family: 'Overpass', sans-serif;
     color: #FFFFFF;
     font-size: 2em;
