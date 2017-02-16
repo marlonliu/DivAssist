@@ -24,7 +24,7 @@ def register(request):
     else:
         form = RegistrationForm()
  
-    return render(request, 'registration/register.html', {
+    return render(request, 'divassist_web/registration/register.html', {
 		'form': form
 	})
 
@@ -35,7 +35,8 @@ def logout_page(request):
 
 
 def select_home_station(request):
-    return render(request, 'registration/select_home_station.html',{
+    return render(request, 
+        'divassist_web/registration/select_home_station.html',{
         'user': request.user
     })
 
@@ -44,11 +45,11 @@ def login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/home_page/')
     else:
-        return auth_views.login(request)
+        return auth_views.login(request, template_name='divassist_web/registration/login.html')
 
 
 @login_required
 def home_page(request):
-    return render(request, 'home_page.html', {
+    return render(request, 'divassist_web/home_page.html', {
         'user': request.user
     })
