@@ -13,28 +13,26 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div id="main-container">
-        <div id="form-container">
-            <p class="title-font-dark">Sign up.</p>
-            {% if form.errors %}
-            <!-- TODO: This to be handled nicely. -->
-            <p>Your username and password didn't match. Please try again.</p>
-            {% endif %}
-            <form method="post" action=".">{% csrf_token %}
-                <table>
-                    <tr><th><label for="id_username">Username</label></th><td>{{ form.username }}</td></tr>
-                    <tr><th><label for="id_email">Email</label></th><td>{{ form.email }}</td></tr>
-                    <tr><th><label for="id_email">Password</label></th><td>{{ form.password1 }}</td></tr>
-                    <tr><th><label for="id_email">Password (again)</label></th><td>{{ form.password2 }}</td></tr>
-                </table>
-                <button id="submit-button" type="submit">Register</button>
-                    <input type="hidden" name="next" value="/home_page" />
-            </form>
-            <p style="margin-top: 0.5em;">Having an account? <a href="/">Login</a> now!</p>
-        </div>
-        <div id="pitch-container"> 
-        <!-- TODO: This div under development. -->
-        </div>
+    <div id="form-container">
+        <p class="title-font-dark">Sign up.</p>
+        {% if form.errors %}
+        <!-- TODO: This to be handled nicely. -->
+        <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        <form method="post" action=".">{% csrf_token %}
+            <table>
+                <tr><th><label for="id_username">Username</label></th><td>{{ form.username }}</td></tr>
+                <tr><th><label for="id_email">Email</label></th><td>{{ form.email }}</td></tr>
+                <tr><th><label for="id_email">Password</label></th><td>{{ form.password1 }}</td></tr>
+                <tr><th><label for="id_email">Password (again)</label></th><td>{{ form.password2 }}</td></tr>
+            </table>
+            <button id="submit-button" type="submit">Register</button>
+                <input type="hidden" name="next" value="/home_page" />
+        </form>
+        <p style="margin-top: 0.5em;">Having an account? <a class="link-dark" href="/">Login</a> now!</p>
+    </div>
+    <div id="pitch-container"> 
+    <!-- TODO: This div under development. -->
     </div>
 {% endblock %}
     

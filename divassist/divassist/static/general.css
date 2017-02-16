@@ -21,9 +21,20 @@ body, p, div, img, a, input {
 }
 
 .logo {
+    display: inline-block;
     font-family: 'Overpass', sans-serif;
     color: #FFFFFF;
     font-size: 2em;
+}
+
+#user-specific-container {
+    float: right;
+    display: inline-block;
+    padding-top: 0.75em;
+}
+
+#user-specific-container > a {
+    color: #FFFFFF;
 }
 
 .divvy_blue {
@@ -76,4 +87,21 @@ body, p, div, img, a, input {
     padding-bottom: 0.5em;
     font-family: 'Overpass', sans-serif;
     color: #263238;
+}
+
+.font-white {
+    color: #FFFFFF;
+}
+
+#main-container {
+    width: 80%;
+    padding: 2em 10% 2em 10%;
+}
+
+.link-dark:link, .link-dark:visited, .link-dark:hover, .link-dark:active {
+    color: #263238;
+}
+
+.link-white:link, .link-white:visited, .link-white:hover, .link-white:active {
+    color: #FFFFFF;
 }
