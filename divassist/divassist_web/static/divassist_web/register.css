@@ -1,0 +1,10 @@
+#form-container {
+    background-color: rgba(236, 239, 241, 0.95);
+}
+
+#pitch-container {
+    display: inline-block;
+    width: 50%;
+    float: right;
+    vertical-align: middle;
+}

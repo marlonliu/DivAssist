@@ -9,19 +9,20 @@
         <!-- Include font files from Google Fonts. -->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass:400" rel="stylesheet">
         <!-- Include  -->
+        {%block extra-css %}{% endblock %}
     </head>
     <body>
         <div id="nav">
-            <div class="logo">
+            <a href="/"><div class="logo">
                 Di<span class="divvy_blue">v</span>A<span class="divvy_blue">ss</span>ist
-            </div>
+            </div></a>
         </div>
         <div id="padding-block"></div>
         {% block content %}{% endblock %}
 
         <div id="footer">
             <div class="footer-sec">
-                <div class="footer-title">Follow Us</div>
+                <div class="title-font-white">Follow Us</div>
                 <div id="social-media">
                     <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_fb.png' %}" alt="Facebook Logo"/></a>
                     <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_inst.png' %}"  alt="Instagram Logo"/></a>
@@ -29,7 +30,7 @@
                 </div>
             </div>
             <div class="footer-sec">
-                <div class="footer-title">Contact us</div>
+                <div class="title-font-white">Contact us</div>
                 <p>divassist@uchicago.edu</p>
             </div>
             <div class="footer-sec" style="float: right; padding: 0;">
@@ -44,4 +45,8 @@
 
         </div>
     </body>
+
+    <!-- Include jQuery. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    {% block extra-js %}{% endblock %}
 </html>

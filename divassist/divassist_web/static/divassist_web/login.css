@@ -1,0 +1,54 @@
+body { 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+#main-container {
+    width: 80%;
+    padding: 2em 10% 2em 10%;
+}
+
+#form-container {
+    background-color: rgba(236, 239, 241, 0.8);
+    display: inline-block;
+    padding: 2em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+th {
+    text-align: right;
+    padding-right: 0.5em;
+}
+
+tr {
+    margin-bottom: 3em;
+}
+
+input {
+    border: none;
+    padding: 0.25em;
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 1em;
+    font-family: 'Open Sans', sans-serif;
+    border-bottom: 0.1em solid #78909C;
+}
+
+#submit-button {
+    width: 100%;
+    background-color: #3DB7E4;
+    border: none;
+    padding: 0.25em;
+    margin-top: 1em;
+    font-family: 'Overpass', sans-serif;
+    font-size: 1em;
+    color: #FFFFFF;
+    cursor: pointer;
+}

@@ -1,8 +1,12 @@
-body, p, div, img, a {
+body, p, div, img, a, input {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
     color: #263238;
+}
+
+#footer, nav, body {
+    min-width: 860px;
 }
 
 #nav {
@@ -60,9 +64,16 @@ body, p, div, img, a {
     margin-right: 1em;
 }
 
-.footer-title {
+.title-font-white {
     font-size: 1.5em;
     padding-bottom: 0.5em;
     font-family: 'Overpass', sans-serif;
     color: #FFFFFF;
+}
+
+.title-font-dark {
+    font-size: 1.5em;
+    padding-bottom: 0.5em;
+    font-family: 'Overpass', sans-serif;
+    color: #263238;
 }
