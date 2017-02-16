@@ -1,15 +1,44 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'general.css' %}" />
 
+<!DOCTYPE HTML>
 <html>
     <head>
-        <title>Django Login Application |
-        {% block title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'general.css' %}" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass:400" rel="stylesheet">
+        <title>DivAssist | {% block title %}{% endblock %}</title>
     </head>
     <body>
-        <h1>{% block head %}{% endblock %}</h1>
+        <div id="nav">
+            <div id="logo">
+                Di<span class="divvy_blue">v</span>A<span class="divvy_blue">ss</span>ist
+            </div>
+        </div>
+        <div id="padding-block"></div>
         {% block content %}{% endblock %}
- 
+
+        <div id="footer">
+            <div class="footer-sec">
+                <div class="footer-title">Follow Us</div>
+                <div id="social-media">
+                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_fb.png' %}" /></a>
+                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_inst.png' %}" /></a>
+                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_twit.png' %}" /></a>
+                </div>
+            </div>
+            <div class="footer-sec">
+                <div class="footer-title">Contact us</div>
+                <p>divassist@uchicago.edu</p>
+            </div>
+            <div class="footer-sec" style="float: right; padding: 0;">
+                <div id="logo">
+                    Di<span class="divvy_blue">v</span>A<span class="divvy_blue">ss</span>ist
+                </div>
+                <p>&copy; <span id="cur-year">2017</span> Project DivAssist</p>
+            </div>
+
+            <!-- For auto-adjusting of wrapper div height -->
+            <div style="clear: both;"></div>
+
+        </div>
     </body>
 </html>

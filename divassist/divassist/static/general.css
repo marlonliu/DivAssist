@@ -1,3 +1,68 @@
-body {
-    color: red;
+body, p, div, img, a {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    color: #263238;
+}
+
+#nav {
+    background-color: #263238;
+    width: 80%;
+    padding: .75em 10% .75em 10%;
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+
+#logo {
+    font-family: 'Overpass', sans-serif;
+    color: #FFFFFF;
+    font-size: 2em;
+}
+
+.divvy_blue {
+    color: #3DB7E4;
+}
+
+#padding-block {
+    height: 4.5em;
+    width: 100%;
+}
+
+#footer {
+    background-color: #263238;
+    width: 80%;
+    padding: 2em 10% 2em 10%;
+    display: block;
+    z-index: 10;
+    clear: both;
+}
+
+#footer p {
+    color: #FFFFFF;
+}
+
+.footer-sec {
+    display: inline-block;
+    width: 30%;
+    padding-right: 2em;
+    vertical-align: top;
+}
+
+#social-media {
+    padding: 0 0 0.5em 0;
+}
+
+.social-media-logo {
+    height: 2em;
+    margin-right: 1em;
+}
+
+.footer-title {
+    font-size: 1.5em;
+    padding-bottom: 0.5em;
+    font-family: 'Overpass', sans-serif;
+    color: #FFFFFF;
 }
