@@ -11,23 +11,21 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div id="main-container">
-        <div id="form-container">
-            <p class="title-font-dark">Welcome back.</p>
-            {% if form.errors %}
-            <!-- TODO: This to be handled nicely. -->
-            <p>Your username and password didn't match. Please try again.</p>
-            {% endif %}
-            <form method="post" action=".">{% csrf_token %}
-                <table>
-                    <tr><th><label for="id_username">Username</label></th><td>{{ form.username }}</td></tr>
-                    <tr><th><label for="id_password">Password</label></th><td>{{ form.password }}</td></tr>
-                </table>
-                <button id="submit-button" type="submit">Login</button>
-                <input type="hidden" name="next" value="/home_page" />
-            </form>
-            <p style="margin-top: 0.5em;">New to DivAssist? <a href="/register">Register</a> now!</p>
-        </div>
+    <div id="form-container">
+        <p class="title-font-dark">Welcome back.</p>
+        {% if form.errors %}
+        <!-- TODO: This to be handled nicely. -->
+        <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        <form method="post" action=".">{% csrf_token %}
+            <table>
+                <tr><th><label for="id_username">Username</label></th><td>{{ form.username }}</td></tr>
+                <tr><th><label for="id_password">Password</label></th><td>{{ form.password }}</td></tr>
+            </table>
+            <button id="submit-button" type="submit">Login</button>
+            <input type="hidden" name="next" value="/home_page" />
+        </form>
+        <p style="margin-top: 0.5em;">New to DivAssist? <a class="link-dark" href="/register">Register</a> now!</p>
     </div>
 {% endblock %}
 

@@ -11,13 +11,8 @@ body {
     bottom: 0;
 }
 
-#main-container {
-    width: 80%;
-    padding: 2em 10% 2em 10%;
-}
-
 #form-container {
-    background-color: rgba(236, 239, 241, 0.8);
+    background-color: rgba(236, 239, 241, 0.95);
     display: inline-block;
     padding: 2em;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
