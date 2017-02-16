@@ -2,7 +2,7 @@ from divassist_web.forms import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.views.decorators.csrf import csrf_protect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
  
@@ -20,26 +20,21 @@ def register(request):
     else:
         form = RegistrationForm()
  
-    return render_to_response(
-    'registration/register.html',
-    RequestContext(request, {
+    return render(request, 'registration/register.html', {
 		'form': form
-	}),
-    )
+	})
  
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
 
 def select_home_station(request):
-    return render_to_response(
-    'registration/select_home_station.html',
-    { 'user': request.user }
-    )
+    return render(request, 'registration/select_home_station.html',{
+        'user': request.user
+    })
 
 @login_required
 def home_page(request):
-    return render_to_response(
-    'home_page.html',
-    { 'user': request.user }
-    )
+    return render(request, 'home_page.html', {
+        'user': request.user
+    })
