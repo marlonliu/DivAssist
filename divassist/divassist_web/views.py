@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth import views as auth_views
+# Rides
+from django.utils import timezone
 
  
 @csrf_protect
@@ -53,18 +55,20 @@ def home_page(request):
     return render(request, 'divassist_web/home_page.html', {
         'user': request.user
     })
-    
+
 # Rides
 def add_ride(request):
     if request.method == 'POST':
         form = RideForm(request.POST)
         if form.is_valid():
             ride = Ride(
-                title=form.cleaned_data['title_text'],
+                title_text=form.cleaned_data['title_text'],
+                pub_date=timezone.now(),
                 desc_text=form.cleaned_data['desc_text'],
                 s_neighborhood=form.cleaned_data['s_neighborhood'],
                 e_neighborhood=form.cleaned_data['e_neighborhood'],
-                difficulty=form.cleaned_data['difficulty']
+                difficulty=form.cleaned_data['difficulty'],
+                owner=request.user
             )
             ride.save()
             return HttpResponseRedirect('/rides/ride_created/') # Not made yet
@@ -74,7 +78,12 @@ def add_ride(request):
     return render(request, 'divassist_web/rides/add_ride.html', {
 		'form': form
 	})
-    
+
+def ride_created(request):
+    return render(request, 'divassist_web/rides/ride_created.html', {
+        'user': request.user
+    })
+
 def search_ride(request):
     if request.method == 'POST':
         form = SearchRideForm(request.POST)

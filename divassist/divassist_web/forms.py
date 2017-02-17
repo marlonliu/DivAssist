@@ -7,7 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 from .models import Station, UserProfile, Ride, Tag, Stop, Ride_Review, Station_Review, Ride_Rating, Station_Rating, User
  
 class RegistrationForm(forms.Form):
- 
     username = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label=_("Username"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
     email = forms.EmailField(widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label=_("Email address"))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Password"))
@@ -38,7 +37,7 @@ class RideForm(forms.ModelForm):
     # s_neighborhood = forms.CharField(max_length=200, label=_("Starting Neighborhood"))
     # e_neighborhood = forms.CharField(max_length=200, label=_("Ending Neighborhood"))
     # difficulty = forms.IntegerField(label=_("Difficulty on scale of 1-10"))
-    
+
 class SearchRideForm(forms.Form):
     title = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("Title"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
     start_neighborhood = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("StartNeighborhood"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
@@ -46,4 +45,3 @@ class SearchRideForm(forms.Form):
     CHOICES =(('1', "Easier"), ('2', "Harder"), ('3', "Equal"))
     difftype = forms.ChoiceField(choices=CHOICES, required=False, label=_("Type"))
     difficulty = forms.IntegerField(max_value=10, min_value=1, required=False, label=_("Difficulty"))
-    
