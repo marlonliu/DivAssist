@@ -59,13 +59,14 @@ def add_ride(request):
     if request.method == 'POST':
         form = RideForm(request.POST)
         if form.is_valid():
-            ride = Ride.create(
+            ride = Ride(
                 title=form.cleaned_data['title_text'],
                 desc_text=form.cleaned_data['desc_text'],
                 s_neighborhood=form.cleaned_data['s_neighborhood'],
                 e_neighborhood=form.cleaned_data['e_neighborhood'],
                 difficulty=form.cleaned_data['difficulty']
             )
+            ride.save()
             return HttpResponseRedirect('/rides/ride_created/') # Not made yet
     # GET, etc.
     else:

@@ -25,11 +25,10 @@ class Ride(models.Model):
     e_neighborhood = models.CharField('end neighborhood', max_length=200)
     difficulty = models.IntegerField()
     owner = models.ForeignKey(User)
-    
-    @classmethod
-    def create(cls, title, desc_text, s_neighborhood, e_neighborhood, difficulty):
-        ride = cls(title=title, pub_date=datetime.now(), desc_text=desc_text, s_neighborhood=s_neighborhood, e_neighborhood=e_neighborhood, difficulty=difficulty)
-        return ride
+    # @classmethod
+    # def create(cls, title, desc_text, s_neighborhood, e_neighborhood, difficulty):
+        # ride = cls(title=title, pub_date=datetime.now(), desc_text=desc_text, s_neighborhood=s_neighborhood, e_neighborhood=e_neighborhood, difficulty=difficulty)
+        # return ride
 
 # A ride can have many tags
 # A tag can be associated with many rides
