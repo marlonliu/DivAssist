@@ -95,7 +95,7 @@ class UserAuthenticationTests(TestCase):
         # client should not be able to access home_page directly after logout
         response = test_client.get('/home_page/')
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, '/accounts/login/?next=/home_page/')
+        self.assertRedirects(response, '/?next=/home_page/')
 
 
 class RideTests(TestCase):
