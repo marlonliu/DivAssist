@@ -21,8 +21,9 @@ similar features with login.
     {% if form.errors %}
         <div id="error-message">
             <img src="{% static 'divassist_web/img_src/icon_warning.png' %}" alt="Warning sign" />
-            <!-- TODO: The error message needs to be changed. -->
-            <p class="font-white">Your username and password didn't match. Please try again.</p>
+            {% for field, error in form.errors.items %}
+                <p class="font-white">{{ error }}</p>
+            {% endfor %}
             <div style="clear: both;"></div>
         </div>
     {% endif %}
