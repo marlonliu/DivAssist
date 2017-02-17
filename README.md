@@ -27,10 +27,22 @@ To run the tests:
 * On your homepage, clikcing on the "Logout" button on the top right cornet will make you logout and navigate you to the initial login page.
 
 ### Current Progress  
-
+* We have finished implementing mechanism for a user to create an account, login, and logout. Basically we have finished the entire activity diagram on page 7 of our writeup, except that the functionality for selecting home stations has not yet been implemented.
+* We have finished implementing the navigation logic between different web pages. The activity diagram on page 8 has been fully implemented, except that some of the leaf pages like "browse rides" and 'view saved stations' are using dummy data.
+* HANNAH_HERE
 
 ### How We Split the Work  
+1. Marlon Liu, Joshua Liu, and Paulo Nascimento formed a group to work on user registration and authentication, and the user's homepage.   
+   Marlon: 
+   - the backend for structure for user authentication. Mainly registration forms and how these forms will be handled.  
+   - the navigation logic between pages
+   - fetching data from the cityofchicago data portal  
 
+   Joshua:
+   - designing the entire UI/UX component for this webapp
+   - all css and html files
+
+2. HANNAH_HERE
 
 ### Changes Since Previous Milestone  
 
