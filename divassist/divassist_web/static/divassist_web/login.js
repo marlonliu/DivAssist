@@ -17,4 +17,6 @@ $(document).ready(function() {
     } , function() {
         $(this).css("background-color", "#3DB7E4");
     });
+
+    $("#error-message").css("width", $("#form-container").width().toString() + "px");
 });

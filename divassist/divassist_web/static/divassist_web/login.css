@@ -47,3 +47,23 @@ input {
     color: #FFFFFF;
     cursor: pointer;
 }
+
+#error-message {
+    padding: 2em;
+    margin-bottom: 1em;
+    background-color: #C62828;
+}
+
+#error-message > p, #error-message > img {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#error-message > img {
+    width: 10%;
+}
+
+#error-message > p {
+    width: 85%;
+    float: right;
+}
