@@ -3,6 +3,8 @@ import re
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+# Rides
+from .models import Station, UserProfile, Ride, Tag, Stop, Ride_Review, Station_Review, Ride_Rating, Station_Rating, User
  
 class RegistrationForm(forms.Form):
  
@@ -23,3 +25,16 @@ class RegistrationForm(forms.Form):
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_("The two password fields did not match."))
         return self.cleaned_data
+
+
+# Rides
+class RideForm(forms.ModelForm):
+    class Meta:
+        model = Ride
+        fields = ['title_text', 'desc_text', 's_neighborhood', 'e_neighborhood', 'difficulty']
+# class RideForm(forms.Form):
+    # title = forms.CharField(max_length=200, label=_("Title"))
+    # desc_text = forms.CharField(max_length=2000, label=_("Description"))
+    # s_neighborhood = forms.CharField(max_length=200, label=_("Starting Neighborhood"))
+    # e_neighborhood = forms.CharField(max_length=200, label=_("Ending Neighborhood"))
+    # difficulty = forms.IntegerField(label=_("Difficulty on scale of 1-10"))

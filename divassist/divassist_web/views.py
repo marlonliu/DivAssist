@@ -53,3 +53,24 @@ def home_page(request):
     return render(request, 'divassist_web/home_page.html', {
         'user': request.user
     })
+    
+# Rides
+def add_ride(request):
+    if request.method == 'POST':
+        form = RideForm(request.POST)
+        if form.is_valid():
+            ride = Ride.create(
+                title=form.cleaned_data['title_text'],
+                desc_text=form.cleaned_data['desc_text'],
+                s_neighborhood=form.cleaned_data['s_neighborhood'],
+                e_neighborhood=form.cleaned_data['e_neighborhood'],
+                difficulty=form.cleaned_data['difficulty']
+            )
+            return HttpResponseRedirect('/rides/ride_created/') # Not made yet
+    # GET, etc.
+    else:
+        form = RideForm()
+ 
+    return render(request, 'divassist_web/rides/add_ride.html', {
+		'form': form
+	})

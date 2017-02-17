@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^register/$', register),
     url(r'^home_page/$', home_page),
     url(r'^registration/select_home_station/$', select_home_station),
+    url(r'^rides/add_ride/$', add_ride),
 ]
