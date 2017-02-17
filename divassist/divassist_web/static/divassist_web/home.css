@@ -1,12 +1,2 @@
-home-nav {
-    width: 100%;
-    background-color: #3DB7E4;
-    border: none;
-    padding: 0.25em;
-    margin-top: 1em;
-    font-family: 'Overpass', sans-serif;
-    font-size: 1em;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: block;
+#home-nav {
 }
