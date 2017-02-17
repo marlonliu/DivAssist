@@ -71,7 +71,40 @@ def add_ride(request):
     # GET, etc.
     else:
         form = RideForm()
- 
     return render(request, 'divassist_web/rides/add_ride.html', {
 		'form': form
 	})
+    
+def search_ride(request):
+    if request.method == 'POST':
+        form = SearchRideForm(request.POST)
+        if form.is_valid():
+            title = form['Title']
+            start_neighborhood = form['StartNeighborhood']
+            end_neighborhood = form['EndNeighborhood']
+            diffType = form['Type']
+            difficulty = form['Difficulty']
+            qset = Ride.objects.all()
+            if(title):
+                qset= qset.filter(title_text=title)
+            if(start_neighborhood):
+                qset = qset.filter(start_neighborhood=start_neighborhood)
+            if(end_neighborhood):
+                qset = qset.filter(end_neighborhood=end_neighborhood)
+            if(diffType):
+                if(diffType == "Easier"):
+                    qset = qset.filter(difficulty__lte=difficulty)
+                if(diffType == "Harder"):
+                    qset = qset.filter(difficulty__gt=difficulty)
+                if(diffType == "Equal"):
+                    qset = qset.filter(difficulty=difficulty)
+            rides = Ride.objects.order_by('-pub_date', 'difficulty')
+            return HttpResponseRedirect('/rides/view_rides/') # Not made yet
+            # return render(request, 'divassist_web/rides/view_rides.html', {
+                # 'rides': rides
+            # })
+    else:
+        form = SearchRideForm()
+    return render(request, 'divassist_web/rides/search_rides.html', {
+        'form': form
+    })

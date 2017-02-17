@@ -38,3 +38,12 @@ class RideForm(forms.ModelForm):
     # s_neighborhood = forms.CharField(max_length=200, label=_("Starting Neighborhood"))
     # e_neighborhood = forms.CharField(max_length=200, label=_("Ending Neighborhood"))
     # difficulty = forms.IntegerField(label=_("Difficulty on scale of 1-10"))
+    
+class SearchRideForm(forms.Form):
+    title = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("Title"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
+    start_neighborhood = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("StartNeighborhood"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
+    end_neighborhood = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("EndNeighborhood"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
+    CHOICES =(('1', "Easier"), ('2', "Harder"), ('3', "Equal"))
+    difftype = forms.ChoiceField(choices=CHOICES, required=False, label=_("Type"))
+    difficulty = forms.IntegerField(max_value=10, min_value=1, required=False, label=_("Difficulty"))
+    
