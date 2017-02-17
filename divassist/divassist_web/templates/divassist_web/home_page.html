@@ -10,6 +10,9 @@ Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
 {% endblock %}
 {% block content %}
     Now you are logged in and it is the home page. We are still working on developing the meaty part of it.
+    <button class="home-nav" href="/upload_ride/">Upload ride</button>
+    <button class="home-nav" href="/search_ride/">Search ride</button>
+    <button class="home-nav" href="/view_rides/">View rides</button>
 {% endblock %}
 
 {% block extra-js %}
