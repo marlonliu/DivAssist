@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Upload your ride{% endblock %}
+{% block extra-css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/home.css' %}" />
+{% endblock %}
+{% block user-specific %}
+Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
+{% endblock %}
+{% block content %}
+    This where you are supposed to upload your ride. We are still working on developing the meaty part of it.
+{% endblock %}
+<!--
+UNCOMMENT THIS AFTER JS IS DONE
+{% block extra-js %}
+	<script src="{% static 'divassist_web/YOUR_JS' %}"></script>
+{% endblock %}
+-->

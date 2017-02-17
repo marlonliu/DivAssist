@@ -11,12 +11,17 @@
     </style>
 {% endblock %}
 {% block content %}
+
+    {% if form.errors %}
+        <div id="error-message">
+            <img src="{% static 'divassist_web/img_src/icon_warning.png' %}" alt="Warning sign" />
+            <p class="font-white">Your username and password didn't match. Please try again.</p>
+            <div style="clear: both;"></div>
+        </div>
+    {% endif %}
+
     <div id="form-container">
         <p class="title-font-dark">Welcome back.</p>
-        {% if form.errors %}
-        <!-- TODO: This to be handled nicely. -->
-        <p>Your username and password didn't match. Please try again.</p>
-        {% endif %}
         <form method="post" action=".">{% csrf_token %}
             <table>
                 <tr><th><label for="id_username">Username</label></th><td>{{ form.username }}</td></tr>

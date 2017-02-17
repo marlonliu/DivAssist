@@ -8,7 +8,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^$', login),
+    url(r'^$', login_page),
     url(r'^admin/', admin.site.urls),
     url(r'^logout/$', logout_page),
     url(r'^register/$', register),

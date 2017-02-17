@@ -1,3 +1,8 @@
+<!-- 
+The CSS and JS of login is included here because this page shares a lot of 
+similar features with login.
+-->
+
 {% extends "base.html" %}
 {% load static %}
 
@@ -13,12 +18,18 @@
     </style>
 {% endblock %}
 {% block content %}
+    {% if form.errors %}
+        <div id="error-message">
+            <img src="{% static 'divassist_web/img_src/icon_warning.png' %}" alt="Warning sign" />
+            {% for field, error in form.errors.items %}
+                <p class="font-white">{{ error }}</p>
+            {% endfor %}
+            <div style="clear: both;"></div>
+        </div>
+    {% endif %}
+
     <div id="form-container">
         <p class="title-font-dark">Sign up.</p>
-        {% if form.errors %}
-        <!-- TODO: This to be handled nicely. -->
-        <p>Your username and password didn't match. Please try again.</p>
-        {% endif %}
         <form method="post" action=".">{% csrf_token %}
             <table>
                 <tr><th><label for="id_username">Username</label></th><td>{{ form.username }}</td></tr>
