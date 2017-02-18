@@ -5,5 +5,5 @@ We use Apache Spark to parallelize and streamline our prediction process. While 
 ##How to Run:
 In `interfaceDemo.py` we've outlined the general procedure for working with the Spark interface and query classes. By copying this framework, it's very simple to create queries of your own. 
 
-##Integrating with the rest of DivAssist
+##Integrating with the rest of DivAssist:
 While station-specific predictions can be calculated in seconds, city-wide predictions are also computed in seconds. For simplicity, we can precalculate daily predictions and use those in the main DivAssist interface, and as such, the majority of what's contained in this repo is back-end and support frameworks.
