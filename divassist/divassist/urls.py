@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^rides/add_ride/$', add_ride),
     url(r'^rides/ride_created/$', ride_created),
     url(r'^rides/search_rides/$', search_ride),
+    url(r'^rides/view_ride/$', view_ride),
 ]

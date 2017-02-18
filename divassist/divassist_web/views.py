@@ -129,3 +129,9 @@ def search_ride(request):
     return render(request, 'divassist_web/rides/search_rides.html', {
         'form': form
     })
+
+def view_ride(request):
+    return render(request, 'divassist_web/rides/view_ride.html', {
+        'user': request.user,
+        'ride': rides.objects.first()
+    })
