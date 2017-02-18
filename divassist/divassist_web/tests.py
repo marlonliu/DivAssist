@@ -117,7 +117,7 @@ class RideTests(TestCase):
         tag2.save()
         self.assertIs(r.hasTag(tag2, False))
         # test stations
-        station = Station("Ellis", "59th and Ellis")
+        station = Station(station_name="Ellis", station_address="59th and Ellis")
         station.save()
         s = Stop(ride=r, number=1, station=station)
         s.save()
@@ -141,7 +141,7 @@ class RideTests(TestCase):
         rating.save()
         self.assertIs(r.averageRating(), 4)
     def test_stations(self):
-        station = Station("Ellis", "59th and Ellis")
+        station = Station(station_name="Ellis", station_address="59th and Ellis")
         station.save()
         user = User()
         user.username = 'test'
