@@ -4,12 +4,23 @@
 {% block title %}View your rides{% endblock %}
 {% block extra-css %}
     <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/home.css' %}" />
+    
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/login.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/register.css' %}" />
+    <style>
+        body {
+            background: url({% static 'divassist_web/img_src/register_back.jpg' %}) no-repeat center center fixed;
+        }
+    </style> -->
 {% endblock %}
 {% block user-specific %}
 Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
 {% endblock %}
 {% block content %}
-    <p>Hello {{ user.username }}, this is what a random Ride looks like:</p>
+<p>Hello {{ user.username }}, these are all of the Rides in our database:</p>
+{% for ride in rides %}
+    <br>
+    <p>-------------------------------------------------------------------------------</p>
     <br>
     <p>Ride Title - {{ ride.title_text }}</p>
     <p>Date Published - {{ ride.pub_date }}</p>
@@ -18,6 +29,7 @@ Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
     <p>Ending Neighborhood - {{ ride.e_neighborhood }}</p>
     <p>Difficulty - {{ ride.difficulty }}</p>
     <p>Creator - {{ ride.owner.username }}</p>
+{% endfor %}
 {% endblock %}
 <!--
 UNCOMMENT THIS AFTER JS IS DONE

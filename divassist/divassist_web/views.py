@@ -102,18 +102,18 @@ def search_ride(request):
     if request.method == 'POST':
         form = SearchRideForm(request.POST)
         if form.is_valid():
-            title = form['Title']
-            start_neighborhood = form['StartNeighborhood']
-            end_neighborhood = form['EndNeighborhood']
-            diffType = form['Type']
-            difficulty = form['Difficulty']
+            title = form.cleaned_data['title']
+            start_neighborhood = form.cleaned_data['start_neighborhood']
+            end_neighborhood = form.cleaned_data['end_neighborhood']
+            diffType = form.cleaned_data['difftype']
+            difficulty = form.cleaned_data['difficulty']
             qset = Ride.objects.all()
             if(title):
-                qset= qset.filter(title_text=title)
+                qset = qset.filter(title_text__icontains=title)
             if(start_neighborhood):
-                qset = qset.filter(start_neighborhood=start_neighborhood)
+                qset = qset.filter(s_neighborhood__icontains=start_neighborhood)
             if(end_neighborhood):
-                qset = qset.filter(end_neighborhood=end_neighborhood)
+                qset = qset.filter(e_neighborhood__icontains=end_neighborhood)
             if(diffType):
                 if(diffType == "Easier"):
                     qset = qset.filter(difficulty__lte=difficulty)
@@ -121,11 +121,12 @@ def search_ride(request):
                     qset = qset.filter(difficulty__gt=difficulty)
                 if(diffType == "Equal"):
                     qset = qset.filter(difficulty=difficulty)
-            rides = Ride.objects.order_by('-pub_date', 'difficulty')
-            return HttpResponseRedirect('/rides/view_rides/') # Not made yet
+            filtered_rides = qset.order_by('-pub_date', 'difficulty')
+            # return HttpResponseRedirect('/view_rides/') # Not made yet
             # return render(request, 'divassist_web/rides/view_rides.html', {
                 # 'rides': rides
             # })
+            return view_specific_rides(request, filtered_rides)
     else:
         form = SearchRideForm()
     # return render(request, 'divassist_web/rides/search_rides.html', {
@@ -133,9 +134,16 @@ def search_ride(request):
         'form': form
     })
 
-def view_ride(request):
+def view_all_rides(request):
     # return render(request, 'divassist_web/rides/view_ride.html', {
     return render(request, 'divassist_web/view_ride.html', {
         'user': request.user,
-        'ride': Ride.objects.first()
+        'rides': Ride.objects.all()
+    })
+
+def view_specific_rides(request, rides):
+    # return render(request, 'divassist_web/rides/view_ride.html', {
+    return render(request, 'divassist_web/view_ride.html', {
+        'user': request.user,
+        'rides': rides
     })

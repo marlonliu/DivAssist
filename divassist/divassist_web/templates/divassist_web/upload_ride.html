@@ -4,6 +4,14 @@
 {% block title %}Upload your ride{% endblock %}
 {% block extra-css %}
     <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/home.css' %}" />
+    
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/login.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/register.css' %}" />
+    <style>
+        body {
+            background: url({% static 'divassist_web/img_src/register_back.jpg' %}) no-repeat center center fixed;
+        }
+    </style> -->
 {% endblock %}
 {% block user-specific %}
 Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
@@ -12,8 +20,9 @@ Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
     <div id="form-container">
         <p class="title-font-dark">Add a Ride.</p>
         {% if form.errors %}
-        <!-- TODO: This to be handled nicely. -->
-        <p>Form errors.</p>
+            <!-- TODO: This to be handled nicely. -->
+            <p>Form errors.</p>
+            {{ form.errors }}
         {% endif %}
         <form method="post" action=".">{% csrf_token %}
             <table>

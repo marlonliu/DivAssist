@@ -39,9 +39,12 @@ class RideForm(forms.ModelForm):
     # difficulty = forms.IntegerField(label=_("Difficulty on scale of 1-10"))
 
 class SearchRideForm(forms.Form):
-    title = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("Title"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
-    start_neighborhood = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("StartNeighborhood"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
-    end_neighborhood = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("EndNeighborhood"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
+    # title = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("Title"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
+    # start_neighborhood = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("StartNeighborhood"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
+    # end_neighborhood = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("EndNeighborhood"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
+    title = forms.CharField(required=False, max_length=100, label=_("Title"))
+    start_neighborhood = forms.CharField(required=False, max_length=100, label=_("StartNeighborhood"))
+    end_neighborhood = forms.CharField(required=False, max_length=100, label=_("EndNeighborhood"))
     CHOICES =(('1', "Easier"), ('2', "Harder"), ('3', "Equal"))
-    difftype = forms.ChoiceField(choices=CHOICES, required=False, label=_("Type"))
-    difficulty = forms.IntegerField(max_value=10, min_value=1, required=False, label=_("Difficulty"))
+    difftype = forms.ChoiceField(required=False, choices=CHOICES, label=_("Type"))
+    difficulty = forms.IntegerField(required=False, max_value=10, min_value=1, label=_("Difficulty"))

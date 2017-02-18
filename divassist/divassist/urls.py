@@ -21,5 +21,5 @@ urlpatterns = [
     url(r'^upload_ride/$', add_ride),
     url(r'^rides/ride_created/$', ride_created),
     url(r'^search_ride/$', search_ride),
-    url(r'^view_rides/$', view_ride),
+    url(r'^view_rides/$', view_all_rides),
 ]
