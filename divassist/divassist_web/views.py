@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth import views as auth_views
+from divassist_web.models import *
 
 # Rides
 from django.utils import timezone
@@ -41,11 +42,10 @@ def logout_page(request):
 
 
 def select_home_station(request):
-    response = requests.get("https://data.cityofchicago.org/resource/eq45-8inv.json", verify=False).text
-    data = json.loads(response)
+    data = Station.objects.all()[:10]
     station_names = []
     for station in data:
-        station_names.append(station['station_name'])
+        station_names.append(station.station_name)
     return render(request, 
         'divassist_web/registration/select_home_station.html',{
         'user': request.user,
