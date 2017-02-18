@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.utils import timezone
 from .models import Station, UserProfile, Ride, Tag, Stop, Ride_Review, Station_Review, Ride_Rating, Station_Rating, User, Prediction
+from django.db import models
 
 # Create your tests here.
 
@@ -99,10 +100,22 @@ class UserAuthenticationTests(TestCase):
 
 
 class RideTests(TestCase):
+    def setUp(self):
+        self.user = User()
+        self.user.username = 'test'
+        self.user.set_password('pass')
+        self.user.save()
+
+        self.sta = Station(station_name="home", station_address="1642")
+        self.sta.save()
+
+        self.user_prof = UserProfile(user=self.user, email="abc@example.com", home_station_1=self.sta, home_station_2=self.sta, home_station_3=self.sta)
+        self.user_prof.save()
+
     def test_ride_creation(self):
-        test_ride = Ride(title_text = "The Trip to Grandma's House", desc_text="It's so fun though guys!", s_neighborhood="Hyde Park", e_neighborhood="West Loop", difficulty=10)
-        self.assertIs(Ride(title_text="", desc_text=""), False)
-        r = Ride(title_text="Title", desc_text="Description", s_neighborhood="Hyde Park", e_neighborhood="West Loop", pub_date=timezone.now(), owner=UserProfile(), difficulty=9)
+        # test_ride = Ride(title_text = "The Trip to Grandma's House", desc_text="It's so fun though guys!", s_neighborhood="Hyde Park", e_neighborhood="West Loop", difficulty=10)
+        # self.assertIs(Ride(title_text="", desc_text=""), False)
+        r = Ride(title_text="Title", desc_text="Description", s_neighborhood="Hyde Park", e_neighborhood="West Loop", pub_date=timezone.now(), owner=self.user_prof, difficulty=9)
         r.save()
         self.assertIs(r.setDifficulty(11), False)
         self.assertIs(r.getDifficulty(), 9)
