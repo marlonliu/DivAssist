@@ -9,7 +9,27 @@
 Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
 {% endblock %}
 {% block content %}
-    This where you are supposed to upload your ride. We are still working on developing the meaty part of it.
+    <div id="form-container">
+        <p class="title-font-dark">Add a Ride.</p>
+        {% if form.errors %}
+        <!-- TODO: This to be handled nicely. -->
+        <p>Form errors.</p>
+        {% endif %}
+        <form method="post" action=".">{% csrf_token %}
+            <table>
+                <tr><th><label for="id_username">Ride Title</label></th><td>{{ form.title_text }}</td></tr>
+                <tr><th><label for="id_email">Description</label></th><td>{{ form.desc_text }}</td></tr>
+                <tr><th><label for="id_email">Starting Neighborhood</label></th><td>{{ form.s_neighborhood }}</td></tr>
+                <tr><th><label for="id_email">Ending Neighborhood</label></th><td>{{ form.e_neighborhood }}</td></tr>
+                <tr><th><label for="id_email">Difficulty (1-10)</label></th><td>{{ form.difficulty }}</td></tr>
+            </table>
+            <button id="submit-button" type="submit">Submit Ride</button>
+                <input type="hidden" name="next" value="/home_page" />
+        </form>
+    </div>
+    <div id="pitch-container"> 
+    <!-- TODO: This div under development. -->
+    </div>
 {% endblock %}
 <!--
 UNCOMMENT THIS AFTER JS IS DONE

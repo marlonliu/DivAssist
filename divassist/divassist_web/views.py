@@ -87,7 +87,8 @@ def add_ride(request):
     # GET, etc.
     else:
         form = RideForm()
-    return render(request, 'divassist_web/rides/add_ride.html', {
+    # return render(request, 'divassist_web/rides/add_ride.html', {
+    return render(request, 'divassist_web/upload_ride.html', {
 		'form': form
 	})
 
@@ -126,12 +127,14 @@ def search_ride(request):
             # })
     else:
         form = SearchRideForm()
-    return render(request, 'divassist_web/rides/search_rides.html', {
+    # return render(request, 'divassist_web/rides/search_rides.html', {
+    return render(request, 'divassist_web/search_ride.html', {
         'form': form
     })
 
 def view_ride(request):
-    return render(request, 'divassist_web/rides/view_ride.html', {
+    # return render(request, 'divassist_web/rides/view_ride.html', {
+    return render(request, 'divassist_web/view_ride.html', {
         'user': request.user,
-        'ride': rides.objects.first()
+        'ride': Ride.objects.first()
     })

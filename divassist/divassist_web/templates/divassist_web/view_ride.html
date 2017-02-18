@@ -9,7 +9,15 @@
 Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
 {% endblock %}
 {% block content %}
-    This where you are supposed to see your rides in the past. We are still working on developing the meaty part of it.
+    <p>Hello {{ user.username }}, this is what a random Ride looks like:</p>
+    <br>
+    <p>Ride Title - {{ ride.title_text }}</p>
+    <p>Date Published - {{ ride.pub_date }}</p>
+    <p>Description - {{ ride.desc_text }}</p>
+    <p>Starting Neighborhood - {{ ride.s_neighborhood }}</p>
+    <p>Ending Neighborhood - {{ ride.e_neighborhood }}</p>
+    <p>Difficulty - {{ ride.difficulty }}</p>
+    <p>Creator - {{ ride.owner.username }}</p>
 {% endblock %}
 <!--
 UNCOMMENT THIS AFTER JS IS DONE
