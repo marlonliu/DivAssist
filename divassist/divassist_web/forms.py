@@ -45,6 +45,6 @@ class SearchRideForm(forms.Form):
     title = forms.CharField(required=False, max_length=100, label=_("Title"))
     start_neighborhood = forms.CharField(required=False, max_length=100, label=_("StartNeighborhood"))
     end_neighborhood = forms.CharField(required=False, max_length=100, label=_("EndNeighborhood"))
-    CHOICES =(('1', "Easier"), ('2', "Harder"), ('3', "Equal"))
+    CHOICES =((1, "Easier"), (2, "Harder"), (3, "Equal"))
     difftype = forms.ChoiceField(required=False, choices=CHOICES, label=_("Type"))
     difficulty = forms.IntegerField(required=False, max_value=10, min_value=1, label=_("Difficulty"))

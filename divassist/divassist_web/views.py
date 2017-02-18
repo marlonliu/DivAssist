@@ -114,12 +114,12 @@ def search_ride(request):
                 qset = qset.filter(s_neighborhood__icontains=start_neighborhood)
             if(end_neighborhood):
                 qset = qset.filter(e_neighborhood__icontains=end_neighborhood)
-            if(diffType):
-                if(diffType == "Easier"):
+            if (difficulty and diffType):
+                if(diffType == '1'):
                     qset = qset.filter(difficulty__lte=difficulty)
-                if(diffType == "Harder"):
+                if(diffType == '2'):
                     qset = qset.filter(difficulty__gt=difficulty)
-                if(diffType == "Equal"):
+                if(diffType == '3'):
                     qset = qset.filter(difficulty=difficulty)
             filtered_rides = qset.order_by('-pub_date', 'difficulty')
             # return HttpResponseRedirect('/view_rides/') # Not made yet
