@@ -94,7 +94,8 @@ def add_ride(request):
 
 def ride_created(request):
     return render(request, 'divassist_web/rides/ride_created.html', {
-        'user': request.user
+        'user': request.user,
+        'ride': Ride.objects.last()
     })
 
 def search_ride(request):

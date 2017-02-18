@@ -3,4 +3,13 @@
 {% block head %}You successfully created a Ride!{% endblock %}
 {% block content %}
     <p>Hello {{ user.username }}, thank you for submitting a Ride!</p>
+    <p>This is what your created Ride looks like:</p>
+    <br>
+    <p>Ride Title - {{ ride.title_text }}</p>
+    <p>Date Published - {{ ride.pub_date }}</p>
+    <p>Description - {{ ride.desc_text }}</p>
+    <p>Starting Neighborhood - {{ ride.s_neighborhood }}</p>
+    <p>Ending Neighborhood - {{ ride.e_neighborhood }}</p>
+    <p>Difficulty - {{ ride.difficulty }}</p>
+    <p>Creator - {{ ride.owner.username }}</p>
 {% endblock %}
