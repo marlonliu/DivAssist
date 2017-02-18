@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.utils import timezone
-from .models import Station, UserProfile, Ride, Tag, Stop, Ride_Review, Station_Review, Ride_Rating, Station_Rating, User
+from .models import Station, UserProfile, Ride, Tag, Stop, Ride_Review, Station_Review, Ride_Rating, Station_Rating, User, Prediction
 
 # Create your tests here.
 
