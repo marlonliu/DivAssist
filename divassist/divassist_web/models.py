@@ -77,3 +77,22 @@ class Prediction(models.Model):
     day_of_week = models.CharField(max_length=3) # 3-letter days
     start_hour = models.IntegerField() # start hour of the prediction NOTE: this implementation assumes predictions are 1 hour windows
     station = models.ForeignKey(Station) # station that this prediction is for
+
+    # setter functions
+    def set_day_of_week(self, day):
+        if day not in {'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'}:
+            return False
+        self.day_of_week = day
+        return True
+
+    def set_start_hour(self, hour):
+        if hour < 0 or hour > 23:
+            return False
+        self.start_hour = hour
+        return True
+
+    def set_bikes_available(self, bikes):
+        if bikes < 0:
+            return False
+        self.bikes_available = bikes
+        return True
