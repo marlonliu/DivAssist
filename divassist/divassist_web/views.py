@@ -96,6 +96,7 @@ def add_ride(request):
                 s_neighborhood=form.cleaned_data['s_neighborhood'],
                 e_neighborhood=form.cleaned_data['e_neighborhood'],
                 difficulty=form.cleaned_data['difficulty'],
+                # owner=UserProfile.objects.get(user=request.user)
                 owner=request.user
             )
             ride.save()
@@ -119,16 +120,19 @@ def search_ride(request):
         form = SearchRideForm(request.POST)
         if form.is_valid():
             title = form.cleaned_data['title']
+            desc_keywords = form.cleaned_data['desc_keywords']
             start_neighborhood = form.cleaned_data['start_neighborhood']
             end_neighborhood = form.cleaned_data['end_neighborhood']
             diffType = form.cleaned_data['difftype']
             difficulty = form.cleaned_data['difficulty']
             qset = Ride.objects.all()
-            if(title):
+            if (title):
                 qset = qset.filter(title_text__icontains=title)
-            if(start_neighborhood):
+            if (desc_keywords):
+                qset = qset.filter(desc_text__icontains=desc_keywords)
+            if (start_neighborhood):
                 qset = qset.filter(s_neighborhood__icontains=start_neighborhood)
-            if(end_neighborhood):
+            if (end_neighborhood):
                 qset = qset.filter(e_neighborhood__icontains=end_neighborhood)
             if (difficulty and diffType):
                 if(diffType == '1'):

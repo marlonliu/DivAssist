@@ -27,6 +27,7 @@ Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
         <form method="post" action=".">{% csrf_token %}
             <table>
                 <tr><th><label for="id_username">Ride Title</label></th><td>{{ form.title }}</td></tr>
+                <tr><th><label for="id_email">Description Keywords</label></th><td>{{ form.desc_keywords }}</td></tr>
                 <tr><th><label for="id_email">Starting Neighborhood</label></th><td>{{ form.start_neighborhood }}</td></tr>
                 <tr><th><label for="id_email">Ending Neighborhood</label></th><td>{{ form.end_neighborhood }}</td></tr>
                 <tr><th><label for="id_email">Difficulty Type</label></th><td>{{ form.difftype }}</td></tr>

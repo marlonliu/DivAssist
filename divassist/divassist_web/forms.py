@@ -4,7 +4,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 # Rides
-from .models import Station, UserProfile, Ride, Tag, Stop, Ride_Review, Station_Review, Ride_Rating, Station_Rating, User
+from .models import *
  
 class RegistrationForm(forms.Form):
     username = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=30)), label=_("Username"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
@@ -50,24 +50,26 @@ class HomeStationSelectionForm(forms.Form):
 
 
 # Rides
-class RideForm(forms.ModelForm):
-    class Meta:
-        model = Ride
-        fields = ['title_text', 'desc_text', 's_neighborhood', 'e_neighborhood', 'difficulty']
-# class RideForm(forms.Form):
-    # title = forms.CharField(max_length=200, label=_("Title"))
-    # desc_text = forms.CharField(max_length=2000, label=_("Description"))
-    # s_neighborhood = forms.CharField(max_length=200, label=_("Starting Neighborhood"))
-    # e_neighborhood = forms.CharField(max_length=200, label=_("Ending Neighborhood"))
-    # difficulty = forms.IntegerField(label=_("Difficulty on scale of 1-10"))
+# class RideForm(forms.ModelForm):
+    # class Meta:
+        # model = Ride
+        # fields = ['title_text', 'desc_text', 's_neighborhood', 'e_neighborhood', 'difficulty']
+# forms.Form is just more easily customizable than forms.ModelForm
+class RideForm(forms.Form):
+    title_text = forms.CharField(max_length=200, label=_("Title"))
+    desc_text = forms.CharField(widget=forms.Textarea, label=_("Description"))
+    s_neighborhood = forms.CharField(max_length=200, label=_("StartingNeighborhood"))
+    e_neighborhood = forms.CharField(max_length=200, label=_("EndingNeighborhood"))
+    difficulty = forms.IntegerField(max_value=10, min_value=1, label=_("Difficulty"))
 
 class SearchRideForm(forms.Form):
     # title = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("Title"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
     # start_neighborhood = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("StartNeighborhood"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
     # end_neighborhood = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("EndNeighborhood"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
     title = forms.CharField(required=False, max_length=100, label=_("Title"))
+    desc_keywords = forms.CharField(required=False, max_length=100, label=_("DescriptionKeywords"))
     start_neighborhood = forms.CharField(required=False, max_length=100, label=_("StartNeighborhood"))
     end_neighborhood = forms.CharField(required=False, max_length=100, label=_("EndNeighborhood"))
-    CHOICES =((1, "Easier"), (2, "Harder"), (3, "Equal"))
+    CHOICES = ((1, "Easier"), (2, "Harder"), (3, "Equal"))
     difftype = forms.ChoiceField(required=False, choices=CHOICES, label=_("Type"))
     difficulty = forms.IntegerField(required=False, max_value=10, min_value=1, label=_("Difficulty"))
