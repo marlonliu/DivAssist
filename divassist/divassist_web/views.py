@@ -1,6 +1,7 @@
 from divassist_web.forms import *
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout, login, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -67,6 +68,20 @@ def login_page(request):
 def home_page(request):
     return render(request, 'divassist_web/home_page.html', {
         'user': request.user
+    })
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return HttpResponseRedirect('/home_page/')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'divassist_web/registration/change_password.html', {
+        'user': request.user,
+        'form': form
     })
 
 # Rides

@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^register/$', register),
     url(r'^home_page/$', home_page),
     url(r'^registration/select_home_station/$', select_home_station),
+    url(r'^registration/change_password/$', change_password),
     # url(r'^rides/add_ride/$', add_ride),
     # url(r'^rides/ride_created/$', ride_created),
     # url(r'^rides/search_rides/$', search_ride),
