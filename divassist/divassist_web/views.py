@@ -42,16 +42,17 @@ def logout_page(request):
 
 
 def select_home_station(request):
-    data = Station.objects.all()[:10]
-    station_names = []
-    for station in data:
-        station_names.append(station.station_name)
+    if request.method == 'POST':
+        form = HomeStationSelectionForm(request.POST)
+        if form.is_valid():
+            form.submit()
+            return HttpResponseRedirect('/home_page/')
+    else:
+        form = HomeStationSelectionForm()
     return render(request, 
         'divassist_web/registration/select_home_station.html',{
         'user': request.user,
-        # only show the first 10 items (this is just for the first iteration)
-        # we will implement a typeahead mechanism in the second iteration
-        'stations': station_names[:10] 
+        'form': form
     })
 
 

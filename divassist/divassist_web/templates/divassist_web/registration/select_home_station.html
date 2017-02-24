@@ -3,8 +3,8 @@
 {% block head %}Pick your home station{% endblock %}
 {% block content %}
     <p>Hello {{ user.username }}, you can save your home stations that are close to you</p>
-    {% for station_name in stations %}
-        <p>{{ station_name }}</p>
-    {% endfor %}
+    <form method="post">{% csrf_token %}
+    {{ form.as_p }}
+	</form>
     <a href="/home_page/">Save & Continue</button>
 {% endblock %}

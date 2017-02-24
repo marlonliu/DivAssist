@@ -26,6 +26,18 @@ class RegistrationForm(forms.Form):
         return self.cleaned_data
 
 
+class HomeStationSelectionForm(forms.Form):
+    data = Station.objects.all()[:5]
+    station_names = []
+    for station in data:
+        station_names.append(("id", station.station_name))
+    OPTIONS = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=station_names)
+
+    # def submit(self):
+        # add home station to user
+
+
+
 # Rides
 class RideForm(forms.ModelForm):
     class Meta:
