@@ -43,8 +43,8 @@ To run the tests:
 * Predictions was further implemented
 
 ### How We Split the Work  
-1. Marlon Liu, Joshua Liu, and Paulo Nascimento formed a group to work on user registration and authentication, and the user's homepage.   
-Merge branch 'master' of github.com:marlonliu/DivAssist
+1. Marlon Liu, Joshua Liu, and Paulo Nascimento formed a group to work on user registration and authentication, and the user's homepage.
+
    Marlon: 
    - the backend for structure for user authentication. Mainly registration forms and how these forms will be handled.  
    - the navigation logic between pages
@@ -55,12 +55,14 @@ Merge branch 'master' of github.com:marlonliu/DivAssist
    - all css and beginning html files
 
 2. Hannah Brodheim and Gaibo Zhang formed a group to work on rides pages.
+
    Gaibo:
    - Added templates and views for searching, creating, and viewing rides
+   
    Hannah:
    - Added and incorporated with Gaibo views functionality for updating, creating, and searching rides
 
-3.Rob and Ben worked on the predictions framework.  Together they populated the predictions and added base methods to use the class as required by the tests previously written.
+3. Rob and Ben worked on the predictions framework.  Together they populated the predictions and added base methods to use the class as    required by the tests previously written.
 
 ### Changes Since Previous Milestone  
 
