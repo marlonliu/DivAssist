@@ -98,6 +98,46 @@ class UserAuthenticationTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/?next=/home_page/')
 
+    def test_change_password(self):
+        # create a user for testing
+        user = User()
+        user.username = 'test'
+        user.set_password('pass1')
+        user.save()
+        self.assertEqual(user.check_password("pass1"), True)
+        # login with the correct credentials and navigate to the change password page
+        test_client = Client()
+        test_client.login(username='test', password='pass1')
+        response = test_client.get('/registration/change_password/')
+        self.assertEqual(response.status_code, 200)
+        # cannot change password if original password is wrong
+        response = test_client.post('/registration/change_password/', 
+                                    {'old_password': 'wrong', 
+                                     'new_password1': 'wrong', 
+                                     'new_password2': 'wrong'})
+        self.assertEqual(response.status_code, 200)
+        # cannot change password if confirmation new password does not match new password
+        response = test_client.post('/registration/change_password/', 
+                                    {'old_password': 'pass1', 
+                                     'new_password1': 'pass2', 
+                                     'new_password2': 'wrong'})
+        self.assertEqual(response.status_code, 200)
+        # correct changes password and is then navigated to the homepage
+        response = test_client.post('/registration/change_password/', 
+                                    {'old_password': 'pass1', 
+                                     'new_password1': 'pass2', 
+                                     'new_password2': 'pass2'})
+        self.assertEqual(response.status_code, 302)
+        # check that password has been changed
+        test_client.get('/logout/')
+        # old password should not work
+        response = test_client.post('/', {'username': 'test', 'password': 'pass1'})
+        self.assertEqual(response.status_code, 200)
+        # new password should work
+        response = test_client.post('/', {'username': 'test', 'password': 'pass2'})
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/home_page/')
+        
 
 class RideTests(TestCase):
     def setUp(self):
