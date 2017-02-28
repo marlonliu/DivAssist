@@ -12,6 +12,7 @@ Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
     <div id="greeting" class="title-font-dark">Good <span id="greeting-time"></span>, {{ user.username }}.</div>
     <!-- Now you are logged in and it is the home page. We are still working on developing the meaty part of it. -->
     <div id="home-nav">
+        <div class="first-level-option" id="default-option" func="load" dest="/landing/">Top</div>
         <div class="first-level-option" func="expand">Rides</div>
         <div class="second-level-option" func="load" dest="/upload_ride/">Upload</div>
         <div class="second-level-option" func="load" dest="/search_ride/">Search</div>
@@ -20,7 +21,6 @@ Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
         <div class="first-level-option" func="expand">Account</div>
         <div class="second-level-option" func="land" dest="/registration/change_password/">Basic Info</div>
         <div class="second-level-option" func="land" dest="/registration/select_home_station/">Home Stations</div>
-        <div class="first-level-option" func="land" dest="/">Help</div>
         <div class="first-level-option" func="land" dest="/logout/">Logout</div>
     </div>
     <iframe id="load-window"></iframe>

@@ -1,0 +1,22 @@
+{% extends "window_base.html" %}
+{% load static %}
+
+{% block title %}Upload your ride{% endblock %}
+{% block extra-css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/landing.css' %}" />
+    {% with 'img_src/landing/'|add:time|add:'.jpg' as back_img %}
+    <style>
+        body {
+            background: url({% static back_img %}) no-repeat center center fixed;
+        }
+    </style>
+    {% endwith %}
+{% endblock %}
+
+{% block content %}
+Landing page in construction.
+{% endblock %}
+
+{% block extra-js %}
+    <script src="{% static 'divassist_web/landing.js' %}"></script>
+{% endblock %}

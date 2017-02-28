@@ -3,16 +3,22 @@ $(document).ready(function(){
         var d = new Date();
         var h = d.getHours();
         var word;
+        var time;
         if (h >= 6 && h <= 11) {
             word = "morning";
+            time = 0;
         } else if (h >= 12 && h <= 17) {
             word = "afternoon";
+            time = 1;
         } else {
             word = "evening";
+            time = 2;
         }
         $("#greeting-time").text(word);
+        $("#default-option").attr("dest", $("#default-option").attr("dest") + time.toString() + "/");
     }
 
+    // Set greeting and landing page based on time.
     setGreeting();
 
     $(".second-level-option").hide();
@@ -85,6 +91,8 @@ $(document).ready(function(){
                 hideAllSub($(this));
                 $(this).removeClass("expanded");
             } else {
+                // $(".second-level-option").hide(200);
+                // $(".first-level-option").removeClass("expanded");
                 expandAllSub($(this));
                 $(this).addClass("expanded");
             }
@@ -109,11 +117,16 @@ $(document).ready(function(){
     });
 
     var adjustIframeSize = function() {
-        var iframeH = $(window).outerHeight() - $("#nav").outerHeight() - $("#footer").outerHeight() - parseInt($("#main-container").css("padding-top")) * 2 - $("#greeting").outerHeight();
-        console.log("Height=" + iframeH);
         var iframeW = $("#greeting").outerWidth() - $("#home-nav").outerWidth() - 15;
         console.log("Width=" + iframeW);
-        $("iframe").css({
+
+        var iframeH = $(window).outerHeight() - $("#nav").outerHeight() - $("#footer").outerHeight() - parseInt($("#main-container").css("padding-top")) * 2 - $("#greeting").outerHeight();
+        if (iframeH < $("#home-nav").outerHeight()) {
+            iframeH = $("#home-nav").outerHeight();
+        }
+        console.log("Height=" + iframeH);
+
+        $("#load-window").css({
             "height": iframeH.toString() + "px",
             "width": iframeW.toString() + "px"
         });
@@ -124,4 +137,12 @@ $(document).ready(function(){
     $(window).resize(function() {
         adjustIframeSize();
     });
+
+    $("#home-nav").resize(function() {
+        adjustIframeSize();
+    });
+
+    // Trigger the click of the default landing page.
+    $("#default-option").trigger("click");
+
 });

@@ -163,3 +163,9 @@ def view_specific_rides(request, rides):
         'user': request.user,
         'rides': rides
     })
+
+def landing(request, time):
+    # 0 - morning, 1 - afternoon, 2 - evening
+    return render(request, 'divassist_web/landing.html', {
+        'time': time
+    })
