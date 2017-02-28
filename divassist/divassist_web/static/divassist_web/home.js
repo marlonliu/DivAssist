@@ -110,8 +110,9 @@ $(document).ready(function(){
 
     var adjustIframeSize = function() {
         var iframeH = $(window).outerHeight() - $("#nav").outerHeight() - $("#footer").outerHeight() - parseInt($("#main-container").css("padding-top")) * 2 - $("#greeting").outerHeight();
-        console.log(iframeH);
-        var iframeW = $("#greeting").width() - $("#home-nav").outerWidth() - 5;
+        console.log("Height=" + iframeH);
+        var iframeW = $("#greeting").outerWidth() - $("#home-nav").outerWidth() - 15;
+        console.log("Width=" + iframeW);
         $("iframe").css({
             "height": iframeH.toString() + "px",
             "width": iframeW.toString() + "px"
