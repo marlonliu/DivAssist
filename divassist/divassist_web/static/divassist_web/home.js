@@ -73,9 +73,9 @@ $(document).ready(function(){
         if (func === "land") {
             window.location.href = obj.attr("dest");
         } else if (func === "load") {
-            var dest = obj.attr("dest") + " #main-container";
+            var dest = obj.attr("dest");
             console.log(dest);
-            $("#load-window").load(dest);
+            $("#load-window").attr("src", dest);
         }
     }
 
@@ -108,4 +108,19 @@ $(document).ready(function(){
         }   
     });
 
+    var adjustIframeSize = function() {
+        var iframeH = $(window).outerHeight() - $("#nav").outerHeight() - $("#footer").outerHeight() - parseInt($("#main-container").css("padding-top")) * 2 - $("#greeting").outerHeight();
+        console.log(iframeH);
+        var iframeW = $("#greeting").width() - $("#home-nav").outerWidth() - 1;
+        $("iframe").css({
+            "height": iframeH.toString() + "px",
+            "width": iframeW.toString() + "px"
+        });
+    }
+
+    adjustIframeSize();
+
+    $(window).resize(function() {
+        adjustIframeSize();
+    });
 });
