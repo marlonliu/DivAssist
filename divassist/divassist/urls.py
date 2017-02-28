@@ -8,10 +8,19 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^$', login),
+    url(r'^$', login_page),
     url(r'^admin/', admin.site.urls),
     url(r'^logout/$', logout_page),
     url(r'^register/$', register),
     url(r'^home_page/$', home_page),
     url(r'^registration/select_home_station/$', select_home_station),
+    url(r'^registration/change_password/$', change_password),
+    # url(r'^rides/add_ride/$', add_ride),
+    # url(r'^rides/ride_created/$', ride_created),
+    # url(r'^rides/search_rides/$', search_ride),
+    # url(r'^rides/view_ride/$', view_ride),
+    url(r'^upload_ride/$', add_ride),
+    url(r'^rides/ride_created/$', ride_created),
+    url(r'^search_ride/$', search_ride),
+    url(r'^view_rides/$', view_all_rides),
 ]
