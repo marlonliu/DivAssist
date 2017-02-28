@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^rides/ride_created/$', ride_created),
     url(r'^search_ride/$', search_ride),
     url(r'^view_rides/$', view_all_rides),
+    url(r'^landing/(?P<time>[0-9]+)/$', landing)
 ]
