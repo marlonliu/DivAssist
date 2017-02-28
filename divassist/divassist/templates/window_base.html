@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>DivAssist | {% block title %}{% endblock %}</title>
+        <!-- Include the general style sheet. -->
+        <link rel="stylesheet" type="text/css" href="{% static 'general.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'window.css' %}" />
+        <!-- Include font files from Google Fonts. -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Overpass:400" rel="stylesheet">
+        <!-- Include  -->
+        {%block extra-css %}{% endblock %}
+    </head>
+    <body>
+        <div id="window-main-container">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+
+    <!-- Include jQuery. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'base.js' %}"></script>
+    {% block extra-js %}{% endblock %}
+</html>
