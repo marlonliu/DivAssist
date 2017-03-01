@@ -1,39 +1,41 @@
 {% extends "window_base.html" %}
 {% load static %}
 
-{% block title %}View your rides{% endblock %}
+{% block title %}View Rides{% endblock %}
 {% block extra-css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/home.css' %}" />
-    
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/login.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/register.css' %}" />
-    <style>
-        body {
-            background: url({% static 'divassist_web/img_src/register_back.jpg' %}) no-repeat center center fixed;
-        }
-    </style> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/view_ride.css' %}" />
 {% endblock %}
-{% block user-specific %}
-Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
-{% endblock %}
+
 {% block content %}
-<p>These are the Rides we found found for you in our database:</p>
+<div id="section-title">
+    <p class="title-font-dark" style="padding-bottom: 0.25em;">View rides.</p>
+    <p>Divvy rides, selected just for you.</p>
+</div>
+
 {% for ride in rides %}
-    <br>
-    <p>-------------------------------------------------------------------------------</p>
-    <br>
-    <p>Ride Title - {{ ride.title_text }}</p>
-    <p>Date Published - {{ ride.pub_date }}</p>
-    <p>Description - {{ ride.desc_text }}</p>
-    <p>Starting Neighborhood - {{ ride.s_neighborhood }}</p>
-    <p>Ending Neighborhood - {{ ride.e_neighborhood }}</p>
-    <p>Difficulty - {{ ride.difficulty }}</p>
-    <p>Creator - {{ ride.owner.username }}</p>
+    <div class="record-entry">
+        <img class="bike-icon" src="{% static 'img_src/icon/bike.png' %}" alt="Bike icon">
+        <div class="record-details">
+            <div class="record-title">
+                {{ ride.title_text}}
+                <span class="show-button">(Show More)</span>
+            </div>
+            <div class="hidden-details">
+                <table>
+                    <tr><td class="detail-name">Date Published</td><td>{{ ride.pub_date }}</td></tr>
+                    <tr><td class="detail-name">Description</td><td>{{ ride.desc_text }}</td></tr>
+                    <tr><td class="detail-name">Starting Neighborhood</td><td>{{ ride.s_neighborhood }}</td></tr>
+                    <tr><td class="detail-name">Ending Neighborhood</td><td>{{ ride.e_neighborhood }}</td></tr>
+                    <tr><td class="detail-name">Difficulty</td><td>{{ ride.difficulty }}</td></tr>
+                    <tr><td class="detail-name">Creator</td><td>{{ ride.owner.username }}</td></tr>
+                </table>
+            </div>
+            <div class="hide-button hidden-details">(Show Less)</div>
+        </div>
+    </div>
 {% endfor %}
 {% endblock %}
-<!--
-UNCOMMENT THIS AFTER JS IS DONE
+
 {% block extra-js %}
-	<script src="{% static 'divassist_web/YOUR_JS' %}"></script>
+	<script src="{% static 'divassist_web/view_ride.js' %}"></script>
 {% endblock %}
--->
