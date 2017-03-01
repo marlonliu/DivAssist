@@ -9,30 +9,33 @@
 {% block content %}
 <div id="section-title">
     <p class="title-font-dark" style="padding-bottom: 0.25em;">View rides.</p>
-    <p>Rides, selected just for you.</p>
+    <p>Divvy rides, selected just for you.</p>
 </div>
 
 {% for ride in rides %}
     <div class="record-entry">
-        <div class="record-title">
-            {{ ride.title_text}}
+        <img class="bike-icon" src="{% static 'img_src/icon/bike.png' %}" alt="Bike icon">
+        <div class="record-details">
+            <div class="record-title">
+                {{ ride.title_text}}
+                <span class="show-button">(Show More)</span>
+            </div>
+            <div class="hidden-details">
+                <table>
+                    <tr><td class="detail-name">Date Published</td><td>{{ ride.pub_date }}</td></tr>
+                    <tr><td class="detail-name">Description</td><td>{{ ride.desc_text }}</td></tr>
+                    <tr><td class="detail-name">Starting Neighborhood</td><td>{{ ride.s_neighborhood }}</td></tr>
+                    <tr><td class="detail-name">Ending Neighborhood</td><td>{{ ride.e_neighborhood }}</td></tr>
+                    <tr><td class="detail-name">Difficulty</td><td>{{ ride.difficulty }}</td></tr>
+                    <tr><td class="detail-name">Creator</td><td>{{ ride.owner.username }}</td></tr>
+                </table>
+            </div>
+            <div class="hide-button hidden-details">(Show Less)</div>
         </div>
     </div>
-    <!-- <br>
-    <p>-------------------------------------------------------------------------------</p>
-    <br>
-    <p>Ride Title - {{ ride.title_text }}</p>
-    <p>Date Published - {{ ride.pub_date }}</p>
-    <p>Description - {{ ride.desc_text }}</p>
-    <p>Starting Neighborhood - {{ ride.s_neighborhood }}</p>
-    <p>Ending Neighborhood - {{ ride.e_neighborhood }}</p>
-    <p>Difficulty - {{ ride.difficulty }}</p>
-    <p>Creator - {{ ride.owner.username }}</p> -->
 {% endfor %}
 {% endblock %}
-<!--
-UNCOMMENT THIS AFTER JS IS DONE
+
 {% block extra-js %}
-	<script src="{% static 'divassist_web/YOUR_JS' %}"></script>
+	<script src="{% static 'divassist_web/view_ride.js' %}"></script>
 {% endblock %}
--->
