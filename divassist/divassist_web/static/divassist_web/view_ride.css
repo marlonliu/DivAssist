@@ -1,0 +1,10 @@
+.record-entry {
+    border: none;
+    // border-top: 1px solid black;
+    // border-bottom: 1px solid black;
+    padding: 0.5em 0 0.5em 0;
+}
+
+.record-title {
+    font-family: 'Overpass', sans-serif;
+}

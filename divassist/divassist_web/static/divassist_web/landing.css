@@ -3,7 +3,8 @@
     padding: 1em 2em 1em 3em;
     top: 4em;
     position: relative;
-    background-color: rgba(38, 50, 56, 0.8)
+    background-color: rgba(38, 50, 56, 0.8);
+    left: -2em;
 }
 
 #greeting > #greet-title {
