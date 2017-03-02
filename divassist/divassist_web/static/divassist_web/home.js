@@ -19,8 +19,18 @@ $(document).ready(function(){
         $("#default-option").attr("dest", $("#default-option").attr("dest") + time.toString() + "/");
     }
 
+    var setPredictionUrl = function() {
+        var d = new Date();
+        var day = d.getDay();
+        var h = d.getHours();
+        $("#prediction-option").attr("dest", $("#prediction-option").attr("dest") + day + "/" + h + "/");
+    }
+
     // Set greeting and landing page based on time.
     setGreeting();
+
+    // Set prediction link to include current day and time as default options
+    setPredictionUrl();
 
     $(".second-level-option").hide();
 
