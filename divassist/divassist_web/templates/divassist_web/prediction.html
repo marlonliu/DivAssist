@@ -25,9 +25,45 @@
                 zoom: 12,
                 center: chicago
             });
+            // add heatmap / station markers
+            var circle ={
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: 'red',
+                fillOpacity: .4,
+                scale: 4.5,
+                strokeColor: 'white',
+                strokeWeight: 1
+            };
+            heatmapData = []
+            stationMarkers = []
+            infoWindows = []
+            {% for prediction in predictions %}
+            // add heatmap data
+            heatmapData.push({
+                location: new google.maps.LatLng({{ prediction.station.station_long }}, {{ prediction.station.station_lat }}),
+                weight: {{ prediction.bikes_available }}
+            });
+            // add marker
+            var stationMarker = new google.maps.Marker({
+                position: {lat: {{ prediction.station.station_long }}, lng: {{ prediction.station.station_lat }}},
+                title: "{{ prediction.station.station_name }}".replace("&amp;", "&"),
+                icon: circle,
+                map: map
+            });
+            stationMarkers.push(stationMarker);
+            {% endfor %}
+
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: heatmapData,
+                map: map,
+                maxIntensity: 8,
+                radius: 85
+            });
+            heatmap.setMap(map);
+
             // get user's location and center
             var geoLocationSuccess = function(location) {
-                userLatLong = {lat: location.coords.latitude, lng: location.coords.longitude}
+                var userLatLong = {lat: location.coords.latitude, lng: location.coords.longitude}
                 map.setCenter(userLatLong);
                 map.setZoom(16);
                 var marker = new google.maps.Marker({
@@ -43,7 +79,7 @@
         }
         </script>
         <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&libraries=visualization&callback=initMap">
         </script>
     </body>
 {% endblock %}
