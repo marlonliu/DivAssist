@@ -8,6 +8,7 @@
 
 .record-title {
     font-family: 'Overpass', sans-serif;
+    font-weight: bold;
 }
 
 .bike-icon {
@@ -27,10 +28,12 @@
     font-family: 'Overpass', sans-serif;
     text-align: right;
     padding-right: 1em;
+    font-weight: bold;
 }
 
 .show-button {
     display: inline-block;
+    font-weight: normal;
 }
 
 .hide-button {
