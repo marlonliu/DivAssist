@@ -23,7 +23,7 @@ $(document).ready(function(){
         var d = new Date();
         var day = d.getDay();
         var h = d.getHours();
-        $("#prediction-option").attr("dest", $("#prediction-option").attr("dest") + "?day=" + day + "&hour=" + h);
+        $("#prediction-option").attr("dest", $("#prediction-option").attr("dest") + day + "/" + h + "/");
     }
 
     // Set greeting and landing page based on time.
