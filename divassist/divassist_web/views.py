@@ -12,6 +12,7 @@ from divassist_web.models import *
 # Rides
 from django.utils import timezone
 
+import os
 import requests, json
 
  
@@ -172,4 +173,6 @@ def landing(request, time):
 
 @login_required
 def prediction(request):
-    return render(request, 'divassist_web/prediction.html')
+    return render(request, 'divassist_web/prediction.html', {
+        'google_maps_key': os.environ['GOOGLE_MAPS_KEY']
+    })
