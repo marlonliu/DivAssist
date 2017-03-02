@@ -34,21 +34,33 @@
                 strokeColor: 'white',
                 strokeWeight: 1
             };
+
+            // define info window
+            var infoStr = "**placeholder**"
+            infoWindow = new google.maps.InfoWindow({
+                content: infoStr
+            });
+
             heatmapData = []
             stationMarkers = []
-            infoWindows = []
             {% for prediction in predictions %}
             // add heatmap data
             heatmapData.push({
                 location: new google.maps.LatLng({{ prediction.station.station_long }}, {{ prediction.station.station_lat }}),
                 weight: {{ prediction.bikes_available }}
-            });
+            });            
             // add marker
             var stationMarker = new google.maps.Marker({
                 position: {lat: {{ prediction.station.station_long }}, lng: {{ prediction.station.station_lat }}},
                 title: "{{ prediction.station.station_name }}".replace("&amp;", "&"),
                 icon: circle,
-                map: map
+                map: map,
+                html: "{{ prediction.station.station_name }}<br>Predicted availability: {{ prediction.bikes_available }} bikes"
+            });
+            // add info window click event
+            stationMarker.addListener('click', function() {
+                infoWindow.setContent(this.html);
+                infoWindow.open(map, this);
             });
             stationMarkers.push(stationMarker);
             {% endfor %}
