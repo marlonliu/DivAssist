@@ -36,6 +36,10 @@ input {
     border-bottom: 0.1em solid #78909C;
 }
 
+label {
+    font-family: 'Overpass', sans-serif;
+}
+
 #submit-button {
     width: 100%;
     background-color: #3DB7E4;

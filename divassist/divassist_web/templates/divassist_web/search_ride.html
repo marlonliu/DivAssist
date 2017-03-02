@@ -3,7 +3,7 @@
 
 {% block title %}Find Rides{% endblock %}
 {% block extra-css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/home.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/search_ride.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -26,8 +26,8 @@
             <tr><th><label for="id_email">Difficulty Type</label></th><td>{{ form.difftype }}</td></tr>
             <tr><th><label for="id_email">Difficulty (1-10)</label></th><td>{{ form.difficulty }}</td></tr>
         </table>
-        <button id="submit-button" type="submit">Submit Ride Search</button>
-            <input type="hidden" name="next" value="/home_page" />
+        <button id="submit-button" type="submit">Search</button>
+        <input type="hidden" name="next" value="/home_page" />
     </form>
 </div>
 {% endblock %}

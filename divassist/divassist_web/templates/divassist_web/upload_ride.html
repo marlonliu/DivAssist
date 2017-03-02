@@ -3,7 +3,9 @@
 
 {% block title %}Upload Ride{% endblock %}
 {% block extra-css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/home.css' %}" />
+    <!-- css for search_ride is included here instead because a lot of 
+         styles are recycled. -->
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/search_ride.css' %}" />
 {% endblock %}
 
 {% block content %}
@@ -13,21 +15,16 @@
 </div>
 
 <div id="form-container">
-    {% if form.errors %}
-        <!-- TODO: This to be handled nicely. -->
-        <p>Form errors.</p>
-        {{ form.errors }}
-    {% endif %}
     <form method="post" action=".">{% csrf_token %}
         <table>
-            <tr><th><label for="id_username">Ride Title</label></th><td>{{ form.title_text }}</td></tr>
-            <tr><th><label for="id_email">Description</label></th><td>{{ form.desc_text }}</td></tr>
-            <tr><th><label for="id_email">Starting Neighborhood</label></th><td>{{ form.s_neighborhood }}</td></tr>
-            <tr><th><label for="id_email">Ending Neighborhood</label></th><td>{{ form.e_neighborhood }}</td></tr>
-            <tr><th><label for="id_email">Difficulty (1-10)</label></th><td>{{ form.difficulty }}</td></tr>
+            <tr><th><label for="ride_title">Ride Title</label></th><td>{{ form.title_text }}</td></tr>
+            <tr><th><label for="ride_desc">Description</label></th><td>{{ form.desc_text }}</td></tr>
+            <tr><th><label for="ride_start">Starting Neighborhood</label></th><td>{{ form.s_neighborhood }}</td></tr>
+            <tr><th><label for="ride_end">Ending Neighborhood</label></th><td>{{ form.e_neighborhood }}</td></tr>
+            <tr><th><label for="ride_difficulty">Difficulty (1-10)</label></th><td>{{ form.difficulty }}</td></tr>
         </table>
         <button id="submit-button" type="submit">Submit Ride</button>
-            <input type="hidden" name="next" value="/home_page" />
+        <input type="hidden" name="next" value="/home_page" />
     </form>
 </div>
 {% endblock %}
