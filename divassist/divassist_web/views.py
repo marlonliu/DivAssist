@@ -169,3 +169,7 @@ def landing(request, time):
     return render(request, 'divassist_web/landing.html', {
         'time': time
     })
+
+@login_required
+def prediction(request):
+    return render(request, 'divassist_web/prediction.html')
