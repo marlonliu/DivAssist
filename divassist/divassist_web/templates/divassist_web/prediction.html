@@ -21,10 +21,25 @@
         <script>
         function initMap() {
             var chicago = {lat: 41.85, lng: -87.65};
-            var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: chicago
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: chicago
             });
+            // get user's location and center
+            var geoLocationSuccess = function(location) {
+                userLatLong = {lat: location.coords.latitude, lng: location.coords.longitude}
+                map.setCenter(userLatLong);
+                map.setZoom(16);
+                var marker = new google.maps.Marker({
+                    position: userLatLong,
+                    map: map,
+                });
+            }
+            var geoLocationFailure = function(error) {
+                // TODO: what to do here?
+                alert("Geolocation failed.");
+            }
+            navigator.geolocation.getCurrentPosition(geoLocationSuccess, geoLocationFailure);
         }
         </script>
         <script async defer
