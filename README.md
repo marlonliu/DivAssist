@@ -8,6 +8,9 @@ To start the server:
 To run the tests:  
 `make tests`
 
+In order to be able to view the Prediction page, you need to set the `GOOGLE_MAPS_KEY` environment variable to a valid [Google Maps Javascript API Key](https://developers.google.com/maps/documentation/javascript/get-api-key). You can do so (for your current shell) by running:
+
+`export GOOGLE_MAPS_KEY=YOUR_API_KEY`
 
 ### Suggested Acceptance Tests  
 ##### 1. User Authentication
