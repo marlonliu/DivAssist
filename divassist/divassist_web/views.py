@@ -161,10 +161,10 @@ def search_ride(request):
                     qset = qset.filter(difficulty__gt=difficulty)
                 if(diffType == '3'):
                     qset = qset.filter(difficulty=difficulty)
-            # if (tags):
-                # tags_array = list(filter(None, re.split(',| ', tags_string)))   # tokenize by comma and space
-                # for tag_name in tags_array:
-                    # qset = qset.filter(
+            if (tags_string):
+                tags_array = list(filter(None, re.split(',| ', tags_string)))   # tokenize by comma and space
+                for tag_name in tags_array:
+                    qset = qset.filter(tag__tag=tag_name)
             filtered_rides = qset.order_by('-pub_date', 'difficulty')
             # return HttpResponseRedirect('/view_rides/') # Not made yet
             # return render(request, 'divassist_web/rides/view_rides.html', {
