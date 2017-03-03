@@ -1,8 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Pick your home station{% endblock %}
-{% block head %}Pick your home station{% endblock %}
+{% load static %}
+
+{% block title %}Pick your home stations{% endblock %}
+{% block extra-css %}
+    <!-- css for search_ride is included here instead because a lot of 
+         styles are recycled. -->
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/search_ride.css' %}" />
+{% endblock %}
+
 {% block content %}
-    <p>Hello {{ user.username }}, you can save your home stations that are close to you</p>
+    <p>Hello {{ user.username }}, you can save your home stations that are close to you.</p>
     <p>Your current home stations are</p>
 	{% for ch in currenthomes %}
 
@@ -11,6 +18,14 @@
 
     <form method="post">{% csrf_token %}
     {{ form.as_p }}
+        <button id="submit-button" type="submit">Submit Home Stations</button>
+        <input type="hidden" name="next" value="/home_page" />
 	</form>
-    <a href="/home_page/">Save &amp; Continue</button>
+
+{% endblock %}
+
+
+{% block extra-js %}
+    <!-- JS of login is included here for recycle. -->
+    <script src="{% static 'divassist_web/login.js' %}"></script>
 {% endblock %}

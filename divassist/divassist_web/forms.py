@@ -27,20 +27,11 @@ class RegistrationForm(forms.Form):
         
 
 class HomeStationSelectionForm(forms.Form):
-    data = Station.objects.all()[:5]
-    station_names = []
-    for station in data:
-        station_names.append(("id", station.station_name))
-    OPTIONS = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=station_names)
+    data = Station.objects.all().order_by('station_name')
+    first = forms.ModelChoiceField(queryset=data,  label=_("first home station  "))
+    second = forms.ModelChoiceField(queryset=data, label=_("second home station "))
+    third = forms.ModelChoiceField(queryset=data,  label=_("third home station  "))
 
-    def submit(self, request):
-        for option in OPTIONS:
-            s = Station.objects.get(station_name=option)
-            (request.user).addHomeStation(s)
-
-    def addHomeStation(self, st):
-        if (self.home_station_1 == None):
-            self.home_station_1 = st
 
 
 # Rides

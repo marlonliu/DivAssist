@@ -50,25 +50,30 @@ def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
 
-def select_home_station(request):
+def changed_home_station(request):
     u = request.user.userprofile
     homestations = []
     homestations.append(u.home_station_1)
     homestations.append(u.home_station_2)
     homestations.append(u.home_station_3)
+    return render(request, 'divassist_web/registration/changed_home_station.html', {
+        'currenthomes': homestations
+        })
 
+def select_home_station(request):
     if request.method == 'POST':
         form = HomeStationSelectionForm(request.POST)
-        console.log("HERE")
-        if form.is_valid():
-            for option in OPTIONS:
-                console.log(OPTIONS)
-                s = Station.objects.get(station_name=option)
-                self.addHomeStation(u, s)
-            u.save()
-            return HttpResponseRedirect('/home_page/')
+        if (form.is_valid()):
+            print("submitted form")
+            homestation(request, form)
+            return HttpResponseRedirect('/registration/changed_home_station/')
     else:
         form = HomeStationSelectionForm()
+        u = request.user.userprofile
+        homestations = []
+        homestations.append(u.home_station_1)
+        homestations.append(u.home_station_2)
+        homestations.append(u.home_station_3)
     return render(request, 
         'divassist_web/registration/select_home_station.html',{
         'user': request.user,
@@ -76,12 +81,12 @@ def select_home_station(request):
         'form': form
     })
 
-def addHomeStation(self, user, st):
-    user.home_station_1 = st
-    user.save()
-
-        # If all home stations are full the first one is replaced
-    return
+def homestation(request, form):
+    u = request.user.userprofile
+    u.home_station_1 = form.cleaned_data['first']
+    u.home_station_2 = form.cleaned_data['second']
+    u.home_station_3 = form.cleaned_data['third']
+    u.save()
 
 def login_page(request):
     if request.user.is_authenticated():
@@ -92,6 +97,7 @@ def login_page(request):
 
 @login_required
 def home_page(request):
+    print("homestation")
     return render(request, 'divassist_web/home_page.html', {
         'user': request.user
     })
@@ -125,11 +131,10 @@ def add_ride(request):
                 owner=request.user
             )
             ride.save()
-            return HttpResponseRedirect('/rides/ride_created/') # Not made yet
+            return HttpResponseRedirect('/rides/ride_created/') 
     # GET, etc.
     else:
         form = RideForm()
-    # return render(request, 'divassist_web/rides/add_ride.html', {
     return render(request, 'divassist_web/upload_ride.html', {
 		'form': form
 	})
@@ -141,6 +146,7 @@ def ride_created(request):
     })
 
 def search_ride(request):
+    print("search rides")
     if request.method == 'POST':
         form = SearchRideForm(request.POST)
         if form.is_valid():

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Pick your home station{% endblock %}
+{% block head %}Pick your home station{% endblock %}
+{% block content %}
+    <p>Hello {{ user.username }}, your home stations are</p>
+	{% for ch in currenthomes %}
+		<ul>{{ch.station_name}}</ul>
+	{% endfor %}
+
+    <a href="/home_page/">Continue</button>
+{% endblock %}
