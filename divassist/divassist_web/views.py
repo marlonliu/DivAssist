@@ -143,6 +143,9 @@ def search_ride(request):
             # return render(request, 'divassist_web/rides/view_rides.html', {
                 # 'rides': rides
             # })
+            if (len(filtered_rides) == 0):
+              return no_matching_rides(request)
+            
             return view_specific_rides(request, filtered_rides)
     else:
         form = SearchRideForm()
@@ -163,6 +166,11 @@ def view_specific_rides(request, rides):
     return render(request, 'divassist_web/view_ride.html', {
         'user': request.user,
         'rides': rides
+    })
+
+def no_matching_rides(request):
+    return render(request, 'divassist_web/no_matching_rides.html', {
+        'user': request.user
     })
 
 def landing(request, time):
