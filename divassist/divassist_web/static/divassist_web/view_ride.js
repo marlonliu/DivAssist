@@ -14,7 +14,7 @@ $(document).ready(function() {
 
     $(".show-button").click(function() {
         $(this).parent().parent().find(".hidden-details").show(150);
-        $(this).hide()
+        $(this).hide();
     });
 
     $(".hide-button").click(function() {
