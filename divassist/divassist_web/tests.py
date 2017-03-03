@@ -153,11 +153,6 @@ class RideTests(TestCase):
         self.user_prof.save()
 
     def test_ride_creation(self):
-        self.user = User()
-        self.user.username = 'test'
-        self.user.set_password('pass')
-        self.user.save()
-
         self.user_prof = UserProfile(user=self.user, email="abc@example.com")
         self.user_prof.save()
         # test_ride = Ride(title_text = "The Trip to Grandma's House", desc_text="It's so fun though guys!", s_neighborhood="Hyde Park", e_neighborhood="West Loop", difficulty=10)
@@ -196,11 +191,6 @@ class RideTests(TestCase):
         self.assertIs(Ride_Review.objects.get(ride=r), [])
     
     def test_ride_reviews_and_ratings(self):
-        self.user = User()
-        self.user.username = 'test'
-        self.user.set_password('pass')
-        self.user.save()
-
         self.user_prof = UserProfile(user=self.user, email="abc@example.com", home_station_1=None, home_station_2=None, home_station_3=None)
         self.user_prof.save()
 
@@ -222,11 +212,6 @@ class RideTests(TestCase):
 
     def test_stations(self):
         # Stations are all propogated in the database 
-        self.user = User()
-        self.user.username = 'test'
-        self.user.set_password('pass')
-        self.user.save()
-
         self.u1 = UserProfile(user=self.user, email="abc@example.com", home_station_1=None, home_station_2=None, home_station_3=None)
         self.u1.save()
         station = Station.objects.all()[:1]
