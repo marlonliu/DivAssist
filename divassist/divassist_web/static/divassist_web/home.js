@@ -128,7 +128,7 @@ $(document).ready(function(){
     });
 
     var adjustIframeSize = function() {
-        var iframeW = $("#main-container").innerWidth() - $("#home-nav").outerWidth() - 2 * parseInt($("#main-container").css("padding-left")) - 10;
+        var iframeW = $("#main-container").innerWidth() - $("#home-nav").outerWidth() - 2 * parseInt($("#main-container").css("padding-left")) - 20;
         console.log("Width=" + iframeW);
 
         var iframeH = $(window).outerHeight() - $("#nav").outerHeight() - $("#footer").outerHeight() - parseInt($("#main-container").css("padding-top")) * 2;
