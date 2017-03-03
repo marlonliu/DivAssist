@@ -8,6 +8,8 @@ class Station(models.Model):
     station_address = models.CharField(max_length=200)
     station_lat = models.FloatField(default=0)
     station_long = models.FloatField(default=0)
+    def __str__(self):
+        return self.station_name
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

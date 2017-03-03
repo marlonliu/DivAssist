@@ -105,9 +105,11 @@ def add_ride(request):
             new_ride.save()
             
             # Create stops along the way
-            stop = form.cleaned_data['stop']
-            new_stop = Stop(ride=new_ride, number=stop, station=burr)
+            stop_station = form.cleaned_data['stop']
+            print(stop_station.station_name)
+            new_stop = Stop(ride=new_ride, number=1, station=stop_station)
             new_stop.save()
+            print(new_stop.ride.title_text)
             
             # Associate tags with ride, creating tag if it doesn't already exist
             tags_string = form.cleaned_data['tags']
@@ -135,6 +137,7 @@ def ride_created(request):
     return render(request, 'divassist_web/rides/ride_created.html', {
         'user': request.user,
         'ride': ride,
+        'stops': Stop.objects.filter(ride=ride),
         'tags': Tag.objects.filter(rides=ride)
     })
 
