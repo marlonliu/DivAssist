@@ -104,6 +104,11 @@ def add_ride(request):
             )
             new_ride.save()
             
+            # Create stops along the way
+            stop = form.cleaned_data['stop']
+            new_stop = Stop(ride=new_ride, number=stop, station=burr)
+            new_stop.save()
+            
             # Associate tags with ride, creating tag if it doesn't already exist
             tags_string = form.cleaned_data['tags']
             tags_array = list(filter(None, re.split(',| ', tags_string)))   # tokenize by comma and space

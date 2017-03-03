@@ -48,6 +48,10 @@ class RideForm(forms.Form):
     title_text = forms.CharField(max_length=200, label=_("Title"))
     desc_text = forms.CharField(widget=forms.Textarea, label=_("Description"))
     s_neighborhood = forms.CharField(max_length=200, label=_("StartingNeighborhood"))
+    n_stations = Station.objects.count()
+    stations = Station.objects.all()
+    CHOICES = [(number, station.station_name) for number, station in zip(range(1,n_stations), stations)]
+    stop = forms.ChoiceField(choices=CHOICES, label=_("StopStation"))
     e_neighborhood = forms.CharField(max_length=200, label=_("EndingNeighborhood"))
     difficulty = forms.IntegerField(max_value=10, min_value=1, label=_("Difficulty"))
     tags = forms.CharField(max_length=100, label=_("TagsString"))
