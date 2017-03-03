@@ -1,24 +1,23 @@
 {% extends "window_base.html" %}
 {% load static %}
 
-{% block title %}Get availability predictions{% endblock %}
+{% block title %}Prediction{% endblock %}
 {% block extra-css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/home.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/prediction.css' %}" />
 {% endblock %}
 
 {% block content %}
-    <head>
-        <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-        </style>
-    </head>
-    <body>
-        <h3>Availability Prediction</h3>
-        <div id="map"></div>
-        <script>
+    <div id="map-preamble">
+        <div id="section-title">
+            <p class="title-font-dark" style="padding-bottom: 0.25em;">Predict availability.</p>
+            <p>We hope that you can get your Divvy whenever you need it.</p>
+        </div>
+        <div id="predict-options">
+            TODO: Options go here.
+        </div>
+    </div>
+    <div id="map"></div>
+    <script>
         function initMap() {
             var chicago = {lat: 41.85, lng: -87.65};
             map = new google.maps.Map(document.getElementById('map'), {
@@ -89,9 +88,12 @@
             }
             navigator.geolocation.getCurrentPosition(geoLocationSuccess, geoLocationFailure);
         }
-        </script>
-        <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&libraries=visualization&callback=initMap">
-        </script>
-    </body>
+    </script>
+{% endblock %}
+
+{% block extra-js %}
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_key }}&libraries=visualization&callback=initMap">
+    </script>
+    <script src="{% static 'divassist_web/prediction.js' %}"></script>
 {% endblock %}
