@@ -12,9 +12,9 @@ class Station(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField()
-    home_station_1 = models.ForeignKey(Station, related_name='home1')
-    home_station_2 = models.ForeignKey(Station, related_name='home2')
-    home_station_3 = models.ForeignKey(Station, related_name='home3')
+    home_station_1 = models.ForeignKey(Station, related_name='h1',  blank=True, null=True)
+    home_station_2 = models.ForeignKey(Station, related_name='h2', blank=True, null=True)
+    home_station_3 = models.ForeignKey(Station, related_name='h3', blank=True, null=True)
     
     def __str__(self):
         return self.user

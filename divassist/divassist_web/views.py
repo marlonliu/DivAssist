@@ -26,6 +26,15 @@ def register(request):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email']
             )
+            s = Station.objects.get(station_name="Ellis Ave & 60th St")
+            up = UserProfile (
+                    user = user,
+                    email=form.cleaned_data['email'],
+                    home_station_1=s,
+                    home_station_2=s,
+                    home_station_3=s,
+                )
+            up.save()
             login(request, user)
             return HttpResponseRedirect('/registration/select_home_station/')
     elif request.user.is_authenticated():
@@ -37,26 +46,42 @@ def register(request):
 		'form': form
 	})
 
-
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('/')
 
-
 def select_home_station(request):
+    u = request.user.userprofile
+    homestations = []
+    homestations.append(u.home_station_1)
+    homestations.append(u.home_station_2)
+    homestations.append(u.home_station_3)
+
     if request.method == 'POST':
         form = HomeStationSelectionForm(request.POST)
+        console.log("HERE")
         if form.is_valid():
-            form.submit()
+            for option in OPTIONS:
+                console.log(OPTIONS)
+                s = Station.objects.get(station_name=option)
+                self.addHomeStation(u, s)
+            u.save()
             return HttpResponseRedirect('/home_page/')
     else:
         form = HomeStationSelectionForm()
     return render(request, 
         'divassist_web/registration/select_home_station.html',{
         'user': request.user,
+        'currenthomes': homestations,
         'form': form
     })
 
+def addHomeStation(self, user, st):
+    user.home_station_1 = st
+    user.save()
+
+        # If all home stations are full the first one is replaced
+    return
 
 def login_page(request):
     if request.user.is_authenticated():

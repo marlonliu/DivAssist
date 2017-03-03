@@ -33,9 +33,14 @@ class HomeStationSelectionForm(forms.Form):
         station_names.append(("id", station.station_name))
     OPTIONS = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=station_names)
 
-    # def submit(self):
-        # add home station to user
+    def submit(self, request):
+        for option in OPTIONS:
+            s = Station.objects.get(station_name=option)
+            (request.user).addHomeStation(s)
 
+    def addHomeStation(self, st):
+        if (self.home_station_1 == None):
+            self.home_station_1 = st
 
 
 # Rides

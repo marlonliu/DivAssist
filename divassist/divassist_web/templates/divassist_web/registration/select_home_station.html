@@ -3,6 +3,12 @@
 {% block head %}Pick your home station{% endblock %}
 {% block content %}
     <p>Hello {{ user.username }}, you can save your home stations that are close to you</p>
+    <p>Your current home stations are</p>
+	{% for ch in currenthomes %}
+
+		<ul>{{ch.station_name}}</ul>
+	{% endfor %}
+
     <form method="post">{% csrf_token %}
     {{ form.as_p }}
 	</form>
