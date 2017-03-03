@@ -178,7 +178,7 @@ class RideTests(TestCase):
         self.assertIs(Tag.objects.all().filter(rides__title_text__contains='Title').filter(tag__contains='Hilly').exists(), True)
         tag2 = Tag(tag='Scenery')
         tag2.save()
-        self.assertIs(Tag.objects.all().filter(rides__title_text__contains='Title').filter(tag__contains='Scenery').exists(), False))
+        self.assertIs(Tag.objects.all().filter(rides__title_text__contains='Title').filter(tag__contains='Scenery').exists(), False)
         # test stations
         st = Station.objects.get(station_name="Ellis Ave & 60th St")
         s = Stop(ride=r, number=1, station=st)
@@ -205,9 +205,9 @@ class RideTests(TestCase):
         self.user_prof.save()
 
         r = Ride.objects.get(title_text='Oak Ridge to Knoxville')
-        rr1 = Ride_Review(ride=r, comment="This was great", pub_date=timezone.now() owner=self.user_prof)
+        rr1 = Ride_Review(ride=r, comment="This was great", pub_date=timezone.now(), owner=self.user_prof)
         rr1.save()
-        self.assertIs(Ride_Review.objects.all().filter(ride__title_text__contains=r.title_text).filter(comment=rr1)
+        self.assertIs(Ride_Review.objects.all().filter(ride__title_text__contains=r.title_text).filter(comment=rr1))
         self.assertIs(Ride_Rating(ride=r, rating=11, owner=self.user_prof), False)
         self.assertIs(Ride_Rating(ride=r, rating=-1, owner=self.user_prof), False)
         self.assertIs(Ride_Rating(ride=r, rating=4, owner=self.user_prof), True)
