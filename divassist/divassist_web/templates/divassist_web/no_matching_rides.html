@@ -1,0 +1,15 @@
+{% extends "window_base.html" %}
+{% load static %}
+
+{% block title %}View Rides{% endblock %}
+{% block extra-css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/no_matching_rides.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div id="section-title">
+    <p class="title-font-dark" style="padding-bottom: 0.25em;">No rides matching your criteria were found.</p>
+</div>
+
+{% endblock %}
+
