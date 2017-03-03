@@ -111,7 +111,7 @@ def add_ride(request):
             
             # Associate tags with ride, creating tag if it doesn't already exist
             tags_string = form.cleaned_data['tags']
-            tags_array = list(filter(None, re.split(',| ', tags_string)))   # tokenize by comma and space
+            tags_array = list(filter(None, re.split(',| ', tags_string.lower())))   # tokenize by comma and space
             for tag_name in tags_array:
                 found_tag = Tag.objects.filter(tag=tag_name).first()
                 if not found_tag:
@@ -167,7 +167,7 @@ def search_ride(request):
                 if(diffType == '3'):
                     qset = qset.filter(difficulty=difficulty)
             if (tags_string):
-                tags_array = list(filter(None, re.split(',| ', tags_string)))   # tokenize by comma and space
+                tags_array = list(filter(None, re.split(',| ', tags_string.lower())))   # tokenize by comma and space
                 for tag_name in tags_array:
                     qset = qset.filter(tag__tag=tag_name)
             filtered_rides = qset.order_by('-pub_date', 'difficulty')
