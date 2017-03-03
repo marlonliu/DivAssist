@@ -12,7 +12,7 @@
         <!-- Include  -->
         {%block extra-css %}{% endblock %}
     </head>
-    <body>
+    <body id="load-window-body">
         <div id="window-main-container">
             {% block content %}{% endblock %}
         </div>
@@ -20,6 +20,6 @@
 
     <!-- Include jQuery. -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="{% static 'base.js' %}"></script>
+    <script src="{% static 'window.js' %}"></script>
     {% block extra-js %}{% endblock %}
 </html>

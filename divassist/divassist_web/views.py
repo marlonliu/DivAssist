@@ -178,6 +178,9 @@ def search_ride(request):
             # return render(request, 'divassist_web/rides/view_rides.html', {
                 # 'rides': rides
             # })
+            if (len(filtered_rides) == 0):
+              return no_matching_rides(request)
+            
             return view_specific_rides(request, filtered_rides)
     else:
         form = SearchRideForm()
@@ -188,31 +191,42 @@ def search_ride(request):
 
 def view_all_rides(request):
     all_rides = Ride.objects.all()
-    # A list of lists of tags to pass into template
+    # A list of lists of stops and tags to pass into template
     # I really can't think of a better way with our current design
+    stops = []
     tags = []
     for ride in all_rides:
+        ride_stops = Stop.objects.filter(ride=ride)
+        stops.append(ride_stops)
         ride_tags = Tag.objects.filter(rides=ride)
         tags.append(ride_tags)
-    rides_and_tags = zip(all_rides, tags)
+    rides_and_stops_and_tags = zip(all_rides, stops, tags)
     # return render(request, 'divassist_web/rides/view_ride.html', {
     return render(request, 'divassist_web/view_ride.html', {
         'user': request.user,
-        'rides_and_tags': rides_and_tags    # zipped list of rides and tags
+        'rides_and_stops_and_tags': rides_and_stops_and_tags    # zipped list of rides and tags
     })
 
 def view_specific_rides(request, rides):
     # A list of lists of tags to pass into template
     # I really can't think of a better way with our current design
+    stops = []
     tags = []
-    for ride in rides:
+    for ride in all_rides:
+        ride_stops = Stop.objects.filter(ride=ride)
+        stops.append(ride_stops)
         ride_tags = Tag.objects.filter(rides=ride)
         tags.append(ride_tags)
-    rides_and_tags = zip(rides, tags)
+    rides_and_stops_and_tags = zip(all_rides, stops, tags)
     # return render(request, 'divassist_web/rides/view_ride.html', {
     return render(request, 'divassist_web/view_ride.html', {
         'user': request.user,
-        'rides_and_tags': rides_and_tags
+        'rides_and_stops_and_tags': rides_and_stops_and_tags
+    })
+
+def no_matching_rides(request):
+    return render(request, 'divassist_web/no_matching_rides.html', {
+        'user': request.user
     })
 
 def landing(request, time):

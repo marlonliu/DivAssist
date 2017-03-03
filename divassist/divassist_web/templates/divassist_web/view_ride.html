@@ -12,7 +12,7 @@
         <p>Divvy rides, selected just for you.</p>
     </div>
 
-    {% for ride, tags in rides_and_tags %}
+    {% for ride, stops, tags in rides_and_stops_and_tags %}
         <div class="record-entry">
             <img class="bike-icon" src="{% static 'img_src/icon/bike.png' %}" alt="Bike icon">
             <div class="record-details">
@@ -25,6 +25,13 @@
                         <tr><td class="detail-name">Date Published</td><td>{{ ride.pub_date }}</td></tr>
                         <tr><td class="detail-name">Description</td><td>{{ ride.desc_text }}</td></tr>
                         <tr><td class="detail-name">Starting Neighborhood</td><td>{{ ride.s_neighborhood }}</td></tr>
+                        <tr><td class="detail-name">Stop</td>
+                            <td>
+                                {% for stop in stops %}
+                                    {{ stop.station.station_name }}, 
+                                {% endfor %}
+                            </td>
+                        </tr>
                         <tr><td class="detail-name">Ending Neighborhood</td><td>{{ ride.e_neighborhood }}</td></tr>
                         <tr><td class="detail-name">Difficulty</td><td>{{ ride.difficulty }}</td></tr>
                         <tr><td class="detail-name">Tags</td>
