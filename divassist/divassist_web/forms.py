@@ -24,18 +24,7 @@ class RegistrationForm(forms.Form):
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_("The two password fields did not match."))
         return self.cleaned_data
-
-
-class PasswordResetRequestForm(forms.Form):
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Original Password"))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("New Password"))
-    password3 = forms.CharField(widget=forms.PasswordInput(attrs=dict(required=True, max_length=30, render_value=False)), label=_("Confirm New Password"))
-
-    def clean(self):
-        if 'password3' in self.cleaned_data and 'password2' in self.cleaned_data:
-            if self.cleaned_data['password3'] != self.cleaned_data['password2']:
-                raise forms.ValidationError(_("The two password fields did not match."))
-        return self.cleaned_data
+        
 
 class HomeStationSelectionForm(forms.Form):
     data = Station.objects.all()[:5]

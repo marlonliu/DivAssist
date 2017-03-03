@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^rides/ride_created/$', ride_created),
     url(r'^search_ride/$', search_ride),
     url(r'^view_rides/$', view_all_rides),
+    url(r'^landing/(?P<time>[0-9]+)/$', landing),
+    url(r'^prediction/(?P<day>[0-9]+)/(?P<hour>[0-9]+)/.*$', prediction)
 ]

@@ -36,6 +36,10 @@ input {
     border-bottom: 0.1em solid #78909C;
 }
 
+label {
+    font-family: 'Overpass', sans-serif;
+}
+
 #submit-button {
     width: 100%;
     background-color: #3DB7E4;
@@ -54,16 +58,25 @@ input {
     background-color: #C62828;
 }
 
-#error-message > p, #error-message > img {
+#error-message p, #error-message img {
     display: inline-block;
     vertical-align: top;
 }
 
-#error-message > img {
-    width: 10%;
+#error-message img {
+    height: 1.5em;
+    position: relative;
+    top: 0.4em;
 }
 
-#error-message > p {
-    width: 85%;
-    float: right;
+#error-message p {
+    padding-left: 0.5em;
+    font-size: 1.5em;
+    font-family: 'Overpass', sans-serif;
+}
+
+.errorlist {
+    color: #FFFFFF;
+    padding-left: 1.5em;
+    margin: 0;
 }

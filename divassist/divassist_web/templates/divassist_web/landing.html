@@ -1,0 +1,25 @@
+{% extends "window_base.html" %}
+{% load static %}
+
+{% block title %}Landing{% endblock %}
+{% block extra-css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/landing.css' %}" />
+    {% with 'img_src/landing/'|add:time|add:'.jpg' as back_img %}
+    <style>
+        body {
+            background: url({% static back_img %}) no-repeat center center fixed;
+        }
+    </style>
+    {% endwith %}
+{% endblock %}
+
+{% block content %}
+<div id="greeting">
+    <div id="greet-title" class="title-font-white">Good <span id="greeting-time"></span>, {{ user.username }}.</div>
+    <p class="font-white">Please select from the menu on the left to start your journey at Di<span class="divvy_blue">v</span>A<span class="divvy_blue">ss</span>ist.</p>
+</div>
+{% endblock %}
+
+{% block extra-js %}
+    <script src="{% static 'divassist_web/landing.js' %}"></script>
+{% endblock %}

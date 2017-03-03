@@ -12,6 +12,7 @@ from divassist_web.models import *
 # Rides
 from django.utils import timezone
 
+import os
 import requests, json
 
  
@@ -166,4 +167,32 @@ def view_specific_rides(request, rides):
     return render(request, 'divassist_web/view_ride.html', {
         'user': request.user,
         'rides': rides
+    })
+
+def landing(request, time):
+    # 0 - morning, 1 - afternoon, 2 - evening
+    return render(request, 'divassist_web/landing.html', {
+        'time': time
+    })
+
+@login_required
+def prediction(request, day, hour):
+    # convert numerical day to 3-letter day
+    num_to_day = {
+        "0": "Sun",
+        "1": "Mon",
+        "2": "Tue",
+        "3": "Wed",
+        "4": "Thu",
+        "5": "Fri",
+        "6": "Sat"
+    }
+    day_of_week = num_to_day[day]
+
+    # get the predictions for specified day/time
+    predictions = Prediction.objects.filter(day_of_week=day_of_week, start_hour=int(hour))
+
+    return render(request, 'divassist_web/prediction.html', {
+        'google_maps_key': os.environ['GOOGLE_MAPS_KEY'],
+        'predictions': predictions
     })

@@ -1,48 +1,35 @@
-{% extends "base.html" %}
+{% extends "window_base.html" %}
 {% load static %}
 
-{% block title %}Upload your ride{% endblock %}
+{% block title %}Upload Ride{% endblock %}
 {% block extra-css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/home.css' %}" />
-    
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/login.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/register.css' %}" />
-    <style>
-        body {
-            background: url({% static 'divassist_web/img_src/register_back.jpg' %}) no-repeat center center fixed;
-        }
-    </style> -->
+    <!-- css for search_ride is included here instead because a lot of 
+         styles are recycled. -->
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/search_ride.css' %}" />
 {% endblock %}
-{% block user-specific %}
-Welcome, {{ user.username }}. (<a class="link-white" href="/logout/">Logout</a>)
-{% endblock %}
+
 {% block content %}
-    <div id="form-container">
-        <p class="title-font-dark">Add a Ride.</p>
-        {% if form.errors %}
-            <!-- TODO: This to be handled nicely. -->
-            <p>Form errors.</p>
-            {{ form.errors }}
-        {% endif %}
-        <form method="post" action=".">{% csrf_token %}
-            <table>
-                <tr><th><label for="id_username">Ride Title</label></th><td>{{ form.title_text }}</td></tr>
-                <tr><th><label for="id_email">Description</label></th><td>{{ form.desc_text }}</td></tr>
-                <tr><th><label for="id_email">Starting Neighborhood</label></th><td>{{ form.s_neighborhood }}</td></tr>
-                <tr><th><label for="id_email">Ending Neighborhood</label></th><td>{{ form.e_neighborhood }}</td></tr>
-                <tr><th><label for="id_email">Difficulty (1-10)</label></th><td>{{ form.difficulty }}</td></tr>
-            </table>
-            <button id="submit-button" type="submit">Submit Ride</button>
-                <input type="hidden" name="next" value="/home_page" />
-        </form>
-    </div>
-    <div id="pitch-container"> 
-    <!-- TODO: This div under development. -->
-    </div>
+<div id="section-title">
+    <p class="title-font-dark" style="padding-bottom: 0.25em;">Upload rides.</p>
+    <p>Be generous, share your favorite Divvy rides with others.</p>
+</div>
+
+<div id="form-container">
+    <form method="post" action=".">{% csrf_token %}
+        <table>
+            <tr><th><label for="ride_title">Ride Title</label></th><td>{{ form.title_text }}</td></tr>
+            <tr><th><label for="ride_desc">Description</label></th><td>{{ form.desc_text }}</td></tr>
+            <tr><th><label for="ride_start">Starting Neighborhood</label></th><td>{{ form.s_neighborhood }}</td></tr>
+            <tr><th><label for="ride_end">Ending Neighborhood</label></th><td>{{ form.e_neighborhood }}</td></tr>
+            <tr><th><label for="ride_difficulty">Difficulty (1-10)</label></th><td>{{ form.difficulty }}</td></tr>
+        </table>
+        <button id="submit-button" type="submit">Submit Ride</button>
+        <input type="hidden" name="next" value="/home_page" />
+    </form>
+</div>
 {% endblock %}
-<!--
-UNCOMMENT THIS AFTER JS IS DONE
+
 {% block extra-js %}
-	<script src="{% static 'divassist_web/YOUR_JS' %}"></script>
+    <!-- JS of login is included here for recycle. -->
+    <script src="{% static 'divassist_web/login.js' %}"></script>
 {% endblock %}
--->

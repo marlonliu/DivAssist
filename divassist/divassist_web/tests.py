@@ -98,6 +98,46 @@ class UserAuthenticationTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/?next=/home_page/')
 
+    def test_change_password(self):
+        # create a user for testing
+        user = User()
+        user.username = 'test'
+        user.set_password('pass1')
+        user.save()
+        self.assertEqual(user.check_password("pass1"), True)
+        # login with the correct credentials and navigate to the change password page
+        test_client = Client()
+        test_client.login(username='test', password='pass1')
+        response = test_client.get('/registration/change_password/')
+        self.assertEqual(response.status_code, 200)
+        # cannot change password if original password is wrong
+        response = test_client.post('/registration/change_password/', 
+                                    {'old_password': 'wrong', 
+                                     'new_password1': 'wrong', 
+                                     'new_password2': 'wrong'})
+        self.assertEqual(response.status_code, 200)
+        # cannot change password if confirmation new password does not match new password
+        response = test_client.post('/registration/change_password/', 
+                                    {'old_password': 'pass1', 
+                                     'new_password1': 'pass2', 
+                                     'new_password2': 'wrong'})
+        self.assertEqual(response.status_code, 200)
+        # correct changes password and is then navigated to the homepage
+        response = test_client.post('/registration/change_password/', 
+                                    {'old_password': 'pass1', 
+                                     'new_password1': 'pass2', 
+                                     'new_password2': 'pass2'})
+        self.assertEqual(response.status_code, 302)
+        # check that password has been changed
+        test_client.get('/logout/')
+        # old password should not work
+        response = test_client.post('/', {'username': 'test', 'password': 'pass1'})
+        self.assertEqual(response.status_code, 200)
+        # new password should work
+        response = test_client.post('/', {'username': 'test', 'password': 'pass2'})
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/home_page/')
+        
 
 class RideTests(TestCase):
     def setUp(self):
@@ -113,6 +153,13 @@ class RideTests(TestCase):
         self.user_prof.save()
 
     def test_ride_creation(self):
+        self.user = User()
+        self.user.username = 'test'
+        self.user.set_password('pass')
+        self.user.save()
+
+        self.user_prof = UserProfile(user=self.user, email="abc@example.com")
+        self.user_prof.save()
         # test_ride = Ride(title_text = "The Trip to Grandma's House", desc_text="It's so fun though guys!", s_neighborhood="Hyde Park", e_neighborhood="West Loop", difficulty=10)
         # self.assertIs(Ride(title_text="", desc_text=""), False)
         r = Ride(title_text="Title", desc_text="Description", s_neighborhood="Hyde Park", e_neighborhood="West Loop", pub_date=timezone.now(), owner=self.user_prof, difficulty=9)
@@ -121,54 +168,82 @@ class RideTests(TestCase):
         self.assertIs(r.getDifficulty(), 9)
         self.assertIs(r.setDifficulty(-12), False)
         self.assertIs(r.setTitle(""), False)
-        tag1 = Tag('Hilly')
+        tag1 = Tag(tag='Hilly')
         tag1.save()
         tag1.rides.add(r)
-        self.assertIs(r.getTags(), ['Hilly'])
-        self.assertIs(r.hasTag(tag1), True)
-        tag2 = Tag('Scenery')
+        tagsset = Tag.objects.all()
+        tagsset = tagsset.filter(rides__title_text__contains="Title")
+        self.assertFalse(Tag.objects.all().filter(rides__title_text__contains='A terrible name for a rei-92u4orifd').exists())
+        self.assertTrue(tagsset.exists())
+        self.assertIs(Tag.objects.all().filter(rides__title_text__contains='Title').filter(tag__contains='Hilly').exists(), True)
+        tag2 = Tag(tag='Scenery')
         tag2.save()
-        self.assertIs(r.hasTag(tag2, False))
+        self.assertIs(Tag.objects.all().filter(rides__title_text__contains='Title').filter(tag__contains='Scenery').exists(), False))
         # test stations
-        station = Station(station_name="Ellis", station_address="59th and Ellis")
-        station.save()
-        s = Stop(ride=r, number=1, station=station)
+        st = Station.objects.get(station_name="Ellis Ave & 60th St")
+        s = Stop(ride=r, number=1, station=st)
         s.save()
-        self.assertIs(Stop.objects.get(ride=r), [s])
-        self.assertIs(Stop(ride=r, number=1, station=station), False) # you cannot have multiple stops with the same number
-        self.assertIs(Stop(ride=r, number=3, station=station), False) # you cannot skip a number
-        self.assertIs(Stop(ride=r, number=2, station=station), True) # you can have the same stop multiple times
+        st1 = Station.objects.get(station_name="Ellis Ave & 83rd St")
+        s2 = Stop(ride=r, number=2, station=st1)
+        s2.save()
+        stops = Stop.objects.all().filter(ride=r)
+        sts = [s, s2]
+        for i in range(len(stops)):
+            self.assertTrue(stops[i] == sts[i])
+        self.assertIs(Stop(ride=r, number=1, station=st), False) # you cannot have multiple stops with the same number
+        self.assertIs(Stop(ride=r, number=6, station=st), False) # you cannot skip a number
+        self.assertIs(Stop(ride=r, number=3, station=st), True) # you can have the same stop multiple times
         self.assertIs(Ride_Review.objects.get(ride=r), [])
-        rr1 = Ride_Review(ride=r, comment="This was great", pub_date=timezone.now())
-        rr1.save()
-        user = User()
-        user.username = 'test'
-        user.set_password('pass')
-        user.save()
+    
+    def test_ride_reviews_and_ratings(self):
+        self.user = User()
+        self.user.username = 'test'
+        self.user.set_password('pass')
+        self.user.save()
 
-        self.assertIs(Ride_Review.objects.get(ride=r), [rr1])
-        self.assertIs(Ride_Rating(ride=r, rating=11, owner=u1), False)
-        self.assertIs(Ride_Rating(ride=r, rating=-1, owner=u1), False)
-        self.assertIs(Ride_Rating(ride=r, rating=4, owner=u1), True)
-        rating = Ride_Rating(ride=r, rating=4, owner=u1)
+        self.user_prof = UserProfile(user=self.user, email="abc@example.com", home_station_1=None, home_station_2=None, home_station_3=None)
+        self.user_prof.save()
+
+        r = Ride.objects.get(title_text='Oak Ridge to Knoxville')
+        rr1 = Ride_Review(ride=r, comment="This was great", pub_date=timezone.now() owner=self.user_prof)
+        rr1.save()
+        self.assertIs(Ride_Review.objects.all().filter(ride__title_text__contains=r.title_text).filter(comment=rr1)
+        self.assertIs(Ride_Rating(ride=r, rating=11, owner=self.user_prof), False)
+        self.assertIs(Ride_Rating(ride=r, rating=-1, owner=self.user_prof), False)
+        self.assertIs(Ride_Rating(ride=r, rating=4, owner=self.user_prof), True)
+        rating = Ride_Rating(ride=r, rating=4, owner=self.user_prof)
         rating.save()
-        self.assertIs(r.averageRating(), 4)
+        ratings = Ride_Rating.objects.all().filter(ride__title_text__contains=r.title_text).values('rating')
+        average = 0
+        for i in range(len(ratings)):
+            average += ratings[i]
+
+        self.assertIs(average/(len(ratings)), 4)
+
     def test_stations(self):
-        station = Station(station_name="Ellis", station_address="59th and Ellis")
-        station.save()
-        user = User()
-        user.username = 'test'
-        user.set_password('pass')
-        user.save()
-        u1 = UserProfile(user=user, email="me@me.com")
-        u1.save()
-        st = Station_Rating(station=station, rating=7, owner=u1)
+        # Stations are all propogated in the database 
+        self.user = User()
+        self.user.username = 'test'
+        self.user.set_password('pass')
+        self.user.save()
+
+        self.u1 = UserProfile(user=self.user, email="abc@example.com", home_station_1=None, home_station_2=None, home_station_3=None)
+        self.u1.save()
+        station = Station.objects.all()[:1]
+        st = Station_Rating(station=station, rating=8, owner=u1)
         st.save()
         st1 = Station_Rating(station=station, rating=2, owner=u1)
         st1.save()
-        self.assertIs(station.averageRating(), 2) # it should overwrite
+        ratings = Station_Rating.objects.all().filter(station__station_name__contains=station.station_name).values('rating')
+        average = 0
+        for i in range(len(ratings)):
+            average += ratings[i]
+
+        self.assertIs(average/(len(ratings)), 5)
+
         self.assertIs(Station_Rating(station=station, rating=22, owner=u1), False)
         self.assertIs(Station_Rating(station=station, rating=-3, owner=u1), False)
+        # you can change a rating
         self.assertIs(Station_Rating(station=station, rating=3, owner=u1), True)
 
         # Station Reviews
@@ -176,8 +251,19 @@ class RideTests(TestCase):
         st.save()
         st1 = Station_Review(station=station, comment="AMAZING", pub_date=timezone.now(), owner=u1)
         st1.save()
-        self.assertIs(Station_Review.object.filter(station=station), [st, st1]) # it should not overwrite
-        self.assertIs(Station_Review(station=station, comment="THE BEST", pub_date=timezone.now(), owner=u1), True)
+        b = [st, st1]
+        reviews = Station_Review.objects.all().filter(station=station)
+        numreviews = len(reviews)
+        sts = [s, s2]
+        for i in range(len(reviews)):
+            self.assertTrue(reviews[i] == sts[i])
+
+        # You can add a new review
+        self.assertIs(Station_Review(station=station, comment="THE BEST", pub_date=timezone.now(), owner=u1), True )
+
+        # It should not overwrite
+        reviews = Station_Review.objects.all().filter(station=station)
+        self.assertTrue(len(reviews) == (numreviews+1))
 
 
 class PredictionTests(TestCase):

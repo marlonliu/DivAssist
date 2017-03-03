@@ -16,9 +16,11 @@
             <a href="/"><div class="logo">
                 Di<span class="divvy_blue">v</span>A<span class="divvy_blue">ss</span>ist
             </div></a>
+            <!-- 
             <div id="user-specific-container" class="font-white">
                 {% block user-specific %}{% endblock %}
             </div>
+             -->
         </div>
         <div id="padding-block"></div>
         <div id="main-container">
@@ -28,20 +30,20 @@
             <div class="footer-sec">
                 <div class="title-font-white">Follow Us</div>
                 <div id="social-media">
-                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_fb.png' %}" alt="Facebook Logo"/></a>
-                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_inst.png' %}"  alt="Instagram Logo"/></a>
-                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/logo_twit.png' %}"  alt="Twitter Logo"/></a>
+                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/social_media/logo_fb.png' %}" alt="Facebook Logo"/></a>
+                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/social_media/logo_inst.png' %}"  alt="Instagram Logo"/></a>
+                    <a href="#"><img class="social-media-logo" src="{% static 'img_src/social_media/logo_twit.png' %}"  alt="Twitter Logo"/></a>
                 </div>
             </div>
             <div class="footer-sec">
                 <div class="title-font-white">Contact Us</div>
-                <p>divassist@uchicago.edu</p>
+                <a href="mailto:divassist@uchicago.edu"><p>divassist@uchicago.edu</p></a>
             </div>
             <div class="footer-sec" style="float: right; padding: 0;">
                 <div class="logo">
                     Di<span class="divvy_blue">v</span>A<span class="divvy_blue">ss</span>ist
                 </div>
-                <p>&copy; <span id="cur-year">2017</span> Project DivAssist</p>
+                <p>&copy; <span id="cur-year"></span> Project DivAssist</p>
             </div>
 
             <!-- For auto-adjusting of wrapper div height -->
@@ -52,5 +54,6 @@
 
     <!-- Include jQuery. -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'base.js' %}"></script>
     {% block extra-js %}{% endblock %}
 </html>
