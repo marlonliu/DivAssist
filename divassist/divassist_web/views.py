@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.contrib.auth import views as auth_views
 from divassist_web.models import *
+import re
 
 # Rides
 from django.utils import timezone
@@ -90,7 +91,8 @@ def add_ride(request):
     if request.method == 'POST':
         form = RideForm(request.POST)
         if form.is_valid():
-            ride = Ride(
+            # Create new ride
+            new_ride = Ride(
                 title_text=form.cleaned_data['title_text'],
                 pub_date=timezone.now(),
                 desc_text=form.cleaned_data['desc_text'],
@@ -100,8 +102,21 @@ def add_ride(request):
                 # owner=UserProfile.objects.get(user=request.user)
                 owner=request.user
             )
-            ride.save()
-            return HttpResponseRedirect('/rides/ride_created/') # Not made yet
+            new_ride.save()
+            
+            # Associate tags with ride, creating tag if it doesn't already exist
+            tags_string = form.cleaned_data['tags']
+            tags_array = list(filter(None, re.split(',| ', tags_string)))   # tokenize by comma and space
+            for tag_name in tags_array:
+                found_tag = Tag.objects.filter(tag=tag_name).first()
+                if not found_tag:
+                    new_tag = Tag(tag=tag_name)
+                    new_tag.save()
+                    found_tag = new_tag
+                found_tag.rides.add(new_ride)
+            
+            # Return ride_created page
+            return HttpResponseRedirect('/rides/ride_created/')
     # GET, etc.
     else:
         form = RideForm()
@@ -111,9 +126,11 @@ def add_ride(request):
 	})
 
 def ride_created(request):
+    ride = Ride.objects.last()
     return render(request, 'divassist_web/rides/ride_created.html', {
         'user': request.user,
-        'ride': Ride.objects.last()
+        'ride': ride,
+        'tags': Tag.objects.filter(rides=ride)
     })
 
 def search_ride(request):
@@ -126,6 +143,8 @@ def search_ride(request):
             end_neighborhood = form.cleaned_data['end_neighborhood']
             diffType = form.cleaned_data['difftype']
             difficulty = form.cleaned_data['difficulty']
+            tags_string = form.cleaned_data['tags']
+            
             qset = Ride.objects.all()
             if (title):
                 qset = qset.filter(title_text__icontains=title)
@@ -142,6 +161,10 @@ def search_ride(request):
                     qset = qset.filter(difficulty__gt=difficulty)
                 if(diffType == '3'):
                     qset = qset.filter(difficulty=difficulty)
+            # if (tags):
+                # tags_array = list(filter(None, re.split(',| ', tags_string)))   # tokenize by comma and space
+                # for tag_name in tags_array:
+                    # qset = qset.filter(
             filtered_rides = qset.order_by('-pub_date', 'difficulty')
             # return HttpResponseRedirect('/view_rides/') # Not made yet
             # return render(request, 'divassist_web/rides/view_rides.html', {
@@ -156,17 +179,32 @@ def search_ride(request):
     })
 
 def view_all_rides(request):
+    all_rides = Ride.objects.all()
+    # A list of lists of tags to pass into template
+    # I really can't think of a better way with our current design
+    tags = []
+    for ride in all_rides:
+        ride_tags = Tag.objects.filter(rides=ride)
+        tags.append(ride_tags)
+    rides_and_tags = zip(all_rides, tags)
     # return render(request, 'divassist_web/rides/view_ride.html', {
     return render(request, 'divassist_web/view_ride.html', {
         'user': request.user,
-        'rides': Ride.objects.all()
+        'rides_and_tags': rides_and_tags    # zipped list of rides and tags
     })
 
 def view_specific_rides(request, rides):
+    # A list of lists of tags to pass into template
+    # I really can't think of a better way with our current design
+    tags = []
+    for ride in rides:
+        ride_tags = Tag.objects.filter(rides=ride)
+        tags.append(ride_tags)
+    rides_and_tags = zip(rides, tags)
     # return render(request, 'divassist_web/rides/view_ride.html', {
     return render(request, 'divassist_web/view_ride.html', {
         'user': request.user,
-        'rides': rides
+        'rides_and_tags': rides_and_tags
     })
 
 def landing(request, time):

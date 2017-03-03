@@ -50,6 +50,7 @@ class RideForm(forms.Form):
     s_neighborhood = forms.CharField(max_length=200, label=_("StartingNeighborhood"))
     e_neighborhood = forms.CharField(max_length=200, label=_("EndingNeighborhood"))
     difficulty = forms.IntegerField(max_value=10, min_value=1, label=_("Difficulty"))
+    tags = forms.CharField(max_length=100, label=_("TagsString"))
 
 class SearchRideForm(forms.Form):
     # title = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=False, max_length=100)), label=_("Title"), error_messages={ 'invalid': _("This value must contain only letters, numbers and underscores.") })
@@ -62,3 +63,4 @@ class SearchRideForm(forms.Form):
     CHOICES = ((1, "Easier"), (2, "Harder"), (3, "Equal"))
     difftype = forms.ChoiceField(required=False, choices=CHOICES, label=_("Type"))
     difficulty = forms.IntegerField(required=False, max_value=10, min_value=1, label=_("Difficulty"))
+    tags = forms.CharField(required=False, max_length=100, label=_("Tags"))
