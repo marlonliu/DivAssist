@@ -199,7 +199,7 @@ def search_ride(request):
                 if(diffType == '3'):
                     qset = qset.filter(difficulty=difficulty)
             if (tags_string):
-                tags_array = list(filter(None, re.split(',| ', tags_string.lower())))   # tokenize by comma and space
+                tags_array = list(filter(None, re.split(',|, ', tags_string.lower())))   # tokenize by comma only, so we can have multi-word tags
                 for tag_name in tags_array:
                     qset = qset.filter(tag__tag=tag_name)
             filtered_rides = qset.order_by('-pub_date', 'difficulty')
@@ -241,12 +241,12 @@ def view_specific_rides(request, rides):
     # I really can't think of a better way with our current design
     stops = []
     tags = []
-    for ride in all_rides:
+    for ride in rides:
         ride_stops = Stop.objects.filter(ride=ride)
         stops.append(ride_stops)
         ride_tags = Tag.objects.filter(rides=ride)
         tags.append(ride_tags)
-    rides_and_stops_and_tags = zip(all_rides, stops, tags)
+    rides_and_stops_and_tags = zip(rides, stops, tags)
     # return render(request, 'divassist_web/rides/view_ride.html', {
     return render(request, 'divassist_web/view_ride.html', {
         'user': request.user,
