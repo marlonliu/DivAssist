@@ -9,21 +9,23 @@
 {% endblock %}
 
 {% block content %}
-    <p>Hello {{ user.username }}, you can save your home stations that are close to you.</p>
-    <p>Your current home stations are</p>
+    <div id="section-title">
+        <p class="title-font-dark" style="padding-bottom: 0.25em;">
+            Hello {{ user.username }}, you can save home stations that are close to you.
+        </p>
+        <p>Your current home stations are:</p>
+    </div>
+    
 	{% for ch in currenthomes %}
-
 		<ul>{{ch.station_name}}</ul>
 	{% endfor %}
 
     <form method="post">{% csrf_token %}
-    {{ form.as_p }}
+        {{ form.as_p }}
         <button id="submit-button" type="submit">Submit Home Stations</button>
         <input type="hidden" name="next" value="/home_page" />
 	</form>
-
 {% endblock %}
-
 
 {% block extra-js %}
     <!-- JS of login is included here for recycle. -->
