@@ -65,7 +65,7 @@ def select_home_station(request):
     if request.method == 'POST':
         form = HomeStationSelectionForm(request.POST)
         if (form.is_valid()):
-            print("submitted form")
+            # print("submitted form")
             homestation(request, form)
             return HttpResponseRedirect('/registration/changed_home_station/')
     else:
@@ -98,7 +98,7 @@ def login_page(request):
 
 @login_required
 def home_page(request):
-    print("homestation")
+    # print("homestation")
     return render(request, 'divassist_web/home_page.html', {
         'user': request.user
     })
@@ -170,7 +170,7 @@ def ride_created(request):
     })
 
 def search_ride(request):
-    print("search rides")
+    # print("search rides")
     if request.method == 'POST':
         form = SearchRideForm(request.POST)
         if form.is_valid():
