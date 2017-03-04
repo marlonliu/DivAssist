@@ -13,11 +13,58 @@
             <p>We hope that you can get your Divvy whenever you need it.</p>
         </div>
         <div id="predict-options">
-            TODO: Options go here.
+            <select id="select-day" onchange="optionChange()">
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+            </select>
+            <select id="select-hour" onchange="optionChange()">
+                <option value="0">12:00 AM</option>
+                <option value="1">1:00 AM</option>
+                <option value="2">2:00 AM</option>
+                <option value="3">3:00 AM</option>
+                <option value="4">4:00 AM</option>
+                <option value="5">5:00 AM</option>
+                <option value="6">6:00 AM</option>
+                <option value="7">7:00 AM</option>
+                <option value="8">8:00 AM</option>
+                <option value="9">9:00 AM</option>
+                <option value="10">10:00 AM</option>
+                <option value="11">11:00 AM</option>
+                <option value="12">12:00 PM</option>
+                <option value="13">1:00 PM</option>
+                <option value="14">2:00 PM</option>
+                <option value="15">3:00 PM</option>
+                <option value="16">4:00 PM</option>
+                <option value="17">5:00 PM</option>
+                <option value="18">6:00 PM</option>
+                <option value="19">7:00 PM</option>
+                <option value="20">8:00 PM</option>
+                <option value="21">9:00 PM</option>
+                <option value="22">10:00 PM</option>
+                <option value="23">11:00 PM</option>
+            </select>
+            <a id="prediction-submit" href="/placeholder/">Go</a>
         </div>
     </div>
     <div id="map"></div>
     <script>
+        // onChange handlers for the option dropdowns
+        function optionChange() {
+            var day = $("#select-day").val();
+            var hour = $("#select-hour").val();
+            $("#prediction-submit").attr("href", "/prediction/" + day + "/" + hour + "/");
+        }
+
+        // options initialization
+        var path = window.location.pathname.split("/");
+        document.getElementById("select-day").value = path[2]
+        document.getElementById("select-hour").value = path[3]
+
         function initMap() {
             var chicago = {lat: 41.85, lng: -87.65};
             map = new google.maps.Map(document.getElementById('map'), {
