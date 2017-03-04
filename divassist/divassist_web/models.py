@@ -24,11 +24,12 @@ class UserProfile(models.Model):
 class Ride(models.Model):
     title_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField('date published')
-    desc_text = models.CharField('description', max_length=2000)
+    desc_text = models.TextField('description')
     s_neighborhood = models.CharField('start neighborhood', max_length=200)
     e_neighborhood = models.CharField('end neighborhood', max_length=200)
     difficulty = models.IntegerField()
-    owner = models.ForeignKey(UserProfile)
+    # owner = models.ForeignKey(UserProfile)
+    owner = models.ForeignKey(User)
     # @classmethod
     # def create(cls, title, desc_text, s_neighborhood, e_neighborhood, difficulty):
         # ride = cls(title=title, pub_date=datetime.now(), desc_text=desc_text, s_neighborhood=s_neighborhood, e_neighborhood=e_neighborhood, difficulty=difficulty)
@@ -64,14 +65,14 @@ class Stop(models.Model):
 # A review has a comment an owner and a date
 class Ride_Review(models.Model):
     ride = models.ForeignKey(Ride)
-    comment = models.CharField(max_length=200)
+    comment = models.TextField()
     pub_date = models.DateTimeField('date commented')
     owner = models.ForeignKey(User)
 
 # A review has a comment an owner and a date
 class Station_Review(models.Model):
     station = models.ForeignKey(Station)
-    comment = models.CharField(max_length=200)
+    comment = models.TextField()
     pub_date = models.DateTimeField('date commented')
     owner = models.ForeignKey(User)
 

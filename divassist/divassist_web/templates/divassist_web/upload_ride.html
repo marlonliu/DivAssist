@@ -9,24 +9,31 @@
 {% endblock %}
 
 {% block content %}
-<div id="section-title">
-    <p class="title-font-dark" style="padding-bottom: 0.25em;">Upload rides.</p>
-    <p>Be generous, share your favorite Divvy rides with others.</p>
-</div>
+    <div id="section-title">
+        <p class="title-font-dark" style="padding-bottom: 0.25em;">Upload rides.</p>
+        <p>Be generous, share your favorite Divvy rides with others.</p>
+    </div>
 
-<div id="form-container">
-    <form method="post" action=".">{% csrf_token %}
-        <table>
-            <tr><th><label for="ride_title">Ride Title</label></th><td>{{ form.title_text }}</td></tr>
-            <tr><th><label for="ride_desc">Description</label></th><td>{{ form.desc_text }}</td></tr>
-            <tr><th><label for="ride_start">Starting Neighborhood</label></th><td>{{ form.s_neighborhood }}</td></tr>
-            <tr><th><label for="ride_end">Ending Neighborhood</label></th><td>{{ form.e_neighborhood }}</td></tr>
-            <tr><th><label for="ride_difficulty">Difficulty (1-10)</label></th><td>{{ form.difficulty }}</td></tr>
-        </table>
-        <button id="submit-button" type="submit">Submit Ride</button>
-        <input type="hidden" name="next" value="/home_page" />
-    </form>
-</div>
+    <div id="form-container">
+        {% if form.errors %}
+            <!-- TODO: This to be handled nicely. -->
+            <p>Form errors.</p>
+            {{ form.errors }}
+        {% endif %}
+        <form method="post" action=".">{% csrf_token %}
+            <table>
+                <tr><th><label for="ride_title">Ride Title</label></th><td>{{ form.title_text }}</td></tr>
+                <tr><th><label for="ride_desc">Description</label></th><td>{{ form.desc_text }}</td></tr>
+                <tr><th><label for="ride_start">Starting Neighborhood</label></th><td>{{ form.s_neighborhood }}</td></tr>
+                <tr><th><label for="ride_stop">Stop (Station Along the Way)</label></th><td>{{ form.stop }}</td></tr>
+                <tr><th><label for="ride_end">Ending Neighborhood</label></th><td>{{ form.e_neighborhood }}</td></tr>
+                <tr><th><label for="ride_difficulty">Difficulty (1-10)</label></th><td>{{ form.difficulty }}</td></tr>
+                <tr><th><label for="ride_tags">Tags (Separated by Commas or Space)</label></th><td>{{ form.tags }}</td></tr>
+            </table>
+            <button id="submit-button" type="submit">Submit Ride</button>
+            <input type="hidden" name="next" value="/home_page" />
+        </form>
+    </div>
 {% endblock %}
 
 {% block extra-js %}

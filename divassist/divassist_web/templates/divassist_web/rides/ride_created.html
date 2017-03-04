@@ -1,15 +1,49 @@
-{% extends "base.html" %}
-{% block title %}You successfully created a Ride!{% endblock %}
-{% block head %}You successfully created a Ride!{% endblock %}
+{% extends "window_base.html" %}
+{% load static %}
+
+{% block title %}You've successfully created a Ride{% endblock %}
+{% block extra-css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'divassist_web/view_ride.css' %}" />
+{% endblock %}
+
 {% block content %}
-    <p>Thanks for submitting a Ride, {{ user.username }}!</p>
-    <p>This is what your created Ride looks like:</p>
-    <br>
-    <p>Ride Title - {{ ride.title_text }}</p>
-    <p>Date Published - {{ ride.pub_date }}</p>
-    <p>Description - {{ ride.desc_text }}</p>
-    <p>Starting Neighborhood - {{ ride.s_neighborhood }}</p>
-    <p>Ending Neighborhood - {{ ride.e_neighborhood }}</p>
-    <p>Difficulty - {{ ride.difficulty }}</p>
-    <p>Creator - {{ ride.owner.username }}</p>
+    <div id="section-title">
+        <p class="title-font-dark" style="padding-bottom: 0.25em;">Thanks for submitting a Ride, {{ user.username }}!</p>
+        <p>This is what your created Ride looks like:</p>
+    </div>
+
+    <div class="record-entry">
+        <img class="bike-icon" src="{% static 'img_src/icon/bike.png' %}" alt="Bike icon">
+        <div class="record-details">
+            <div class="record-title">
+                {{ ride.title_text }}
+                <!-- <span class="show-button">(Show More)</span> -->
+            </div>
+            <div class="hidden-details">
+                <table>
+                    <tr><td class="detail-name">Date Published</td><td>{{ ride.pub_date }}</td></tr>
+                    <tr><td class="detail-name">Description</td><td>{{ ride.desc_text }}</td></tr>
+                    <tr><td class="detail-name">Starting Neighborhood</td><td>{{ ride.s_neighborhood }}</td></tr>
+                    <tr><td class="detail-name">Stop</td>
+                        <td>
+                            {% for stop in stops %}
+                                {{ stop.station.station_name }}, 
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr><td class="detail-name">Ending Neighborhood</td><td>{{ ride.e_neighborhood }}</td></tr>
+                    <tr><td class="detail-name">Difficulty</td><td>{{ ride.difficulty }}</td></tr>
+                    <tr><td class="detail-name">Tags</td>
+                        <td>
+                            {% for tag in tags %}
+                                {{ tag.tag }}, 
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr><td class="detail-name">Creator</td><td>{{ ride.owner.username }}</td></tr>
+                </table>
+            </div>
+            <!-- <div class="hide-button hidden-details">(Show Less)</div> -->
+        </div>
+    </div>
 {% endblock %}

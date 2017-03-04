@@ -7,33 +7,47 @@
 {% endblock %}
 
 {% block content %}
-<div id="section-title">
-    <p class="title-font-dark" style="padding-bottom: 0.25em;">View rides.</p>
-    <p>Divvy rides, selected just for you.</p>
-</div>
-
-{% for ride in rides %}
-    <div class="record-entry">
-        <img class="bike-icon" src="{% static 'img_src/icons/bike.png' %}" alt="Bike icon">
-        <div class="record-details">
-            <div class="record-title">
-                {{ ride.title_text}}
-                <span class="show-button">(Show More)</span>
-            </div>
-            <div class="hidden-details">
-                <table>
-                    <tr><td class="detail-name">Date Published</td><td>{{ ride.pub_date }}</td></tr>
-                    <tr><td class="detail-name">Description</td><td>{{ ride.desc_text }}</td></tr>
-                    <tr><td class="detail-name">Starting Neighborhood</td><td>{{ ride.s_neighborhood }}</td></tr>
-                    <tr><td class="detail-name">Ending Neighborhood</td><td>{{ ride.e_neighborhood }}</td></tr>
-                    <tr><td class="detail-name">Difficulty</td><td>{{ ride.difficulty }}</td></tr>
-                    <tr><td class="detail-name">Creator</td><td>{{ ride.owner.username }}</td></tr>
-                </table>
-            </div>
-            <div class="hide-button hidden-details">(Show Less)</div>
-        </div>
+    <div id="section-title">
+        <p class="title-font-dark" style="padding-bottom: 0.25em;">View rides.</p>
+        <p>Divvy rides, selected just for you.</p>
     </div>
-{% endfor %}
+
+    {% for ride, stops, tags in rides_and_stops_and_tags %}
+        <div class="record-entry">
+            <img class="bike-icon" src="{% static 'img_src/icon/bike.png' %}" alt="Bike icon">
+            <div class="record-details">
+                <div class="record-title">
+                    {{ ride.title_text }}
+                    <span class="show-button">(Show More)</span>
+                </div>
+                <div class="hidden-details">
+                    <table>
+                        <tr><td class="detail-name">Date Published</td><td>{{ ride.pub_date }}</td></tr>
+                        <tr><td class="detail-name">Description</td><td>{{ ride.desc_text }}</td></tr>
+                        <tr><td class="detail-name">Starting Neighborhood</td><td>{{ ride.s_neighborhood }}</td></tr>
+                        <tr><td class="detail-name">Stop</td>
+                            <td>
+                                {% for stop in stops %}
+                                    {{ stop.station.station_name }}, 
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr><td class="detail-name">Ending Neighborhood</td><td>{{ ride.e_neighborhood }}</td></tr>
+                        <tr><td class="detail-name">Difficulty</td><td>{{ ride.difficulty }}</td></tr>
+                        <tr><td class="detail-name">Tags</td>
+                            <td>
+                                {% for tag in tags %}
+                                    {{ tag.tag }}, 
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr><td class="detail-name">Creator</td><td>{{ ride.owner.username }}</td></tr>
+                    </table>
+                </div>
+                <div class="hide-button hidden-details">(Show Less)</div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
 
 {% block extra-js %}
