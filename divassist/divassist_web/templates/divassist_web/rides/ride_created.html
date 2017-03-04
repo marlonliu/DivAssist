@@ -27,7 +27,7 @@
                     <tr><td class="detail-name">Stop</td>
                         <td>
                             {% for stop in stops %}
-                                {{ stop.station.station_name }}, 
+                                {{ stop.station.station_name }} <b>|</b> 
                             {% endfor %}
                         </td>
                     </tr>
@@ -36,7 +36,7 @@
                     <tr><td class="detail-name">Tags</td>
                         <td>
                             {% for tag in tags %}
-                                {{ tag.tag }}, 
+                                {{ tag.tag }} <b>|</b> 
                             {% endfor %}
                         </td>
                     </tr>

@@ -142,7 +142,7 @@ def add_ride(request):
             
             # Associate tags with ride, creating tag if it doesn't already exist
             tags_string = form.cleaned_data['tags']
-            tags_array = list(filter(None, re.split(',| ', tags_string.lower())))   # tokenize by comma and space
+            tags_array = list(filter(None, re.split(',|, ', tags_string.lower())))   # tokenize by comma only, so we can have multi-word tags
             for tag_name in tags_array:
                 found_tag = Tag.objects.filter(tag=tag_name).first()
                 if not found_tag:
