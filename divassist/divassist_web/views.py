@@ -137,10 +137,8 @@ def add_ride(request):
             
             # Create stops along the way
             stop_station = form.cleaned_data['stop']
-            print(stop_station.station_name)
             new_stop = Stop(ride=new_ride, number=1, station=stop_station)
             new_stop.save()
-            print(new_stop.ride.title_text)
             
             # Associate tags with ride, creating tag if it doesn't already exist
             tags_string = form.cleaned_data['tags']
