@@ -1,3 +1,8 @@
+html {
+    min-width: 1280px;
+    min-height: 900px;
+}
+
 body, p, div, img, a, input {
     margin: 0;
     padding: 0;
