@@ -1,8 +1,6 @@
 .record-entry {
     border: none;
     width: 98%;
-    // border-top: 1px solid black;
-    // border-bottom: 1px solid black;
     padding: 0.5em 0 0.5em 2%;
 }
 
@@ -16,7 +14,6 @@
     padding-right: 0.25em;
     display: inline-block;
     position: relative;
-    // top: 0.4em;
     vertical-align: top;
 }
 

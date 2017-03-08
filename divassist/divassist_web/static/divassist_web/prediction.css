@@ -1,3 +1,15 @@
 #predict-options {
     padding-bottom: 1em;
 }
+
+#prediction-submit {
+    width: 100%;
+    background-color: #3DB7E4;
+    border: none;
+    padding: 0.25em 1em 0.25em 1em;
+    font-family: 'Overpass', sans-serif;
+    font-size: 1em;
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+}

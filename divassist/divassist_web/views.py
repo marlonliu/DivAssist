@@ -282,6 +282,6 @@ def prediction(request, day, hour):
     predictions = Prediction.objects.filter(day_of_week=day_of_week, start_hour=int(hour))
 
     return render(request, 'divassist_web/prediction.html', {
-        'google_maps_key': os.environ['GOOGLE_MAPS_KEY'],
+        'google_maps_key': 'AIzaSyCeLbLmXAnK1pLv8vJm7ET4b3aGy-cW8R0',
         'predictions': predictions
     })
