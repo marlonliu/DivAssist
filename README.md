@@ -1,6 +1,9 @@
 # DivAssist
 This is DivAssist!  A webapp companion to the Divvy Bikeshare service.  
-  
+
+### Installation
+Follow the django installation guide.  Our code is written in python 2 and django 1.10.  http://djangobook.com/installing-django/
+
 ### How to Run
 Navigate to the primary project folder divassist/ (make sure you are in the same directory as Makefile)  
 To start the server:  
