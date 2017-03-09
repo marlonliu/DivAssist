@@ -129,6 +129,13 @@ def add_ride(request):
     if request.method == 'POST':
         form = RideForm(request.POST)
         if form.is_valid():
+            difficulty = form.cleaned_data['difficulty']
+            if (difficulty < 0):
+                difficulty = difficulty * -1
+            if (difficulty < 1):
+                difficulty = 1
+            if (difficulty > 10):
+                difficulty = 10
             # Create new ride
             new_ride = Ride(
                 title_text=form.cleaned_data['title_text'],
@@ -136,7 +143,7 @@ def add_ride(request):
                 desc_text=form.cleaned_data['desc_text'],
                 s_neighborhood=form.cleaned_data['s_neighborhood'],
                 e_neighborhood=form.cleaned_data['e_neighborhood'],
-                difficulty=form.cleaned_data['difficulty'],
+                difficulty=difficulty,
                 # owner=UserProfile.objects.get(user=request.user)
                 owner=request.user
             )
@@ -188,7 +195,12 @@ def search_ride(request):
             diffType = form.cleaned_data['difftype']
             difficulty = form.cleaned_data['difficulty']
             tags_string = form.cleaned_data['tags']
-            
+            if (difficulty < 0):
+                difficulty = difficulty * -1
+            if (difficulty < 1):
+                difficulty = 1
+            if (difficulty > 10):
+                difficulty = 10
             qset = Ride.objects.all()
             if (title):
                 qset = qset.filter(title_text__icontains=title)
