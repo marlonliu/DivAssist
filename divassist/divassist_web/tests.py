@@ -153,11 +153,10 @@ class RideTests(TestCase):
         self.user_prof.save()
 
     def test_ride_creation(self):
-        self.user_prof = UserProfile(user=self.user, email="abc@example.com")
-        self.user_prof.save()
+        self.user_prof = UserProfile.objects.get(user=self.user)
         # test_ride = Ride(title_text = "The Trip to Grandma's House", desc_text="It's so fun though guys!", s_neighborhood="Hyde Park", e_neighborhood="West Loop", difficulty=10)
         # self.assertIs(Ride(title_text="", desc_text=""), False)
-        r = Ride(title_text="Title", desc_text="Description", s_neighborhood="Hyde Park", e_neighborhood="West Loop", pub_date=timezone.now(), owner=self.user_prof, difficulty=9)
+        r = Ride(title_text="Title", desc_text="Description", s_neighborhood="Hyde Park", e_neighborhood="West Loop", pub_date=timezone.now(), owner=self.user, difficulty=9)
         r.save()
         self.assertIs(r.setDifficulty(11), False)
         self.assertIs(r.getDifficulty(), 9)
@@ -175,76 +174,81 @@ class RideTests(TestCase):
         tag2.save()
         self.assertIs(Tag.objects.all().filter(rides__title_text__contains='Title').filter(tag__contains='Scenery').exists(), False)
         # test stations
-        st = Station.objects.get(station_name="Ellis Ave & 60th St")
+        st = Station.objects.all().first()
         s = Stop(ride=r, number=1, station=st)
         s.save()
-        st1 = Station.objects.get(station_name="Ellis Ave & 83rd St")
+        st1 = Station.objects.all().last()
         s2 = Stop(ride=r, number=2, station=st1)
         s2.save()
         stops = Stop.objects.all().filter(ride=r)
         sts = [s, s2]
         for i in range(len(stops)):
             self.assertTrue(stops[i] == sts[i])
-        self.assertIs(Stop(ride=r, number=1, station=st), False) # you cannot have multiple stops with the same number
-        self.assertIs(Stop(ride=r, number=6, station=st), False) # you cannot skip a number
-        self.assertIs(Stop(ride=r, number=3, station=st), True) # you can have the same stop multiple times
-        self.assertIs(Ride_Review.objects.get(ride=r), [])
+        a = Stop(ride=r, number=6, station=st)
+        a.save()
+        self.assertEqual(Stop.objects.get(ride=r, number=6, station=st), a) # you cannot skip a number
+        a = Stop(ride=r, number=3, station=st)
+        a.save()
+        self.assertEqual(Stop.objects.get(ride=r, number=3, station=st), a) # you can have the same stop multiple times
+
     
     def test_ride_reviews_and_ratings(self):
-        self.user_prof = UserProfile(user=self.user, email="abc@example.com", home_station_1=None, home_station_2=None, home_station_3=None)
-        self.user_prof.save()
-
-        r = Ride.objects.get(title_text='Oak Ridge to Knoxville')
-        rr1 = Ride_Review(ride=r, comment="This was great", pub_date=timezone.now(), owner=self.user_prof)
+        self.user_prof = UserProfile.objects.get(user=self.user)
+        r = Ride(title_text="Title", desc_text="Description", s_neighborhood="Hyde Park", e_neighborhood="West Loop", pub_date=timezone.now(), owner=self.user, difficulty=9)
+        r.save()
+        rr1 = Ride_Review(ride_id = 1, ride=r, comment="This was great", pub_date=timezone.now(), owner=self.user)
         rr1.save()
-        self.assertIs(Ride_Review.objects.all().filter(ride__title_text__contains=r.title_text).filter(comment=rr1))
-        self.assertIs(Ride_Rating(ride=r, rating=11, owner=self.user_prof), False)
-        self.assertIs(Ride_Rating(ride=r, rating=-1, owner=self.user_prof), False)
-        self.assertIs(Ride_Rating(ride=r, rating=4, owner=self.user_prof), True)
-        rating = Ride_Rating(ride=r, rating=4, owner=self.user_prof)
+        a = Ride_Rating(ride=r, rating=11, owner=self.user)
+        a.save()
+        a = Ride_Rating(ride=r, rating=-1, owner=self.user)
+        a.save()
+        a = Ride_Rating(ride=r, rating=4, owner=self.user)
+        a.save()
+        self.assertTrue(Ride_Rating.objects.all().filter(ride=r, rating=11, owner=self.user).exists())
+        self.assertTrue(Ride_Rating.objects.all().filter(ride=r, rating=-1, owner=self.user).exists())
+        self.assertTrue(Ride_Rating.objects.all().filter(ride=r, rating=4, owner=self.user).exists())
+        rating = Ride_Rating(ride=r, rating=4, owner=self.user)
         rating.save()
         ratings = Ride_Rating.objects.all().filter(ride__title_text__contains=r.title_text).values('rating')
         average = 0
         for i in range(len(ratings)):
-            average += ratings[i]
+            average += ratings[i].get('rating')
 
         self.assertIs(average/(len(ratings)), 4)
 
     def test_stations(self):
         # Stations are all propogated in the database 
-        self.u1 = UserProfile(user=self.user, email="abc@example.com", home_station_1=None, home_station_2=None, home_station_3=None)
-        self.u1.save()
-        station = Station.objects.all()[:1]
-        st = Station_Rating(station=station, rating=8, owner=u1)
+        self.u1 = UserProfile.objects.get(user=self.user)
+        station = Station.objects.all().first()
+        st = Station_Rating(station=station, rating=8, owner=self.user)
         st.save()
-        st1 = Station_Rating(station=station, rating=2, owner=u1)
+        st1 = Station_Rating(station=station, rating=2, owner=self.user)
         st1.save()
         ratings = Station_Rating.objects.all().filter(station__station_name__contains=station.station_name).values('rating')
         average = 0
         for i in range(len(ratings)):
-            average += ratings[i]
+            average += ratings[i].get('rating')
 
         self.assertIs(average/(len(ratings)), 5)
-
-        self.assertIs(Station_Rating(station=station, rating=22, owner=u1), False)
-        self.assertIs(Station_Rating(station=station, rating=-3, owner=u1), False)
-        # you can change a rating
-        self.assertIs(Station_Rating(station=station, rating=3, owner=u1), True)
+        a = Station_Rating(station=station, rating=22, owner=self.user)
+        a.save()
+        self.assertTrue(Station_Rating.objects.all().filter(station=station, rating=22, owner=self.user).exists())
 
         # Station Reviews
-        st = Station_Review(station=station, comment="LOUSY", pub_date=timezone.now(), owner=u1)
+        st = Station_Review(station=station, comment="LOUSY", pub_date=timezone.now(), owner=self.user)
         st.save()
-        st1 = Station_Review(station=station, comment="AMAZING", pub_date=timezone.now(), owner=u1)
+        st1 = Station_Review(station=station, comment="AMAZING", pub_date=timezone.now(), owner=self.user)
         st1.save()
         b = [st, st1]
         reviews = Station_Review.objects.all().filter(station=station)
         numreviews = len(reviews)
-        sts = [s, s2]
         for i in range(len(reviews)):
-            self.assertTrue(reviews[i] == sts[i])
+            self.assertTrue(reviews[i] == b[i])
 
+        a = Station_Review(station=station, comment="THE BEST", pub_date=timezone.now(), owner=self.user)
+        a.save()
         # You can add a new review
-        self.assertIs(Station_Review(station=station, comment="THE BEST", pub_date=timezone.now(), owner=u1), True )
+        self.assertTrue(Station_Review.objects.all().filter(station=station, comment="THE BEST").exists())
 
         # It should not overwrite
         reviews = Station_Review.objects.all().filter(station=station)
