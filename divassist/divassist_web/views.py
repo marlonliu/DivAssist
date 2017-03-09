@@ -27,7 +27,13 @@ def register(request):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email']
             )
-            s = Station.objects.get(station_name="Ellis Ave & 60th St")
+            try:
+                s = Station.objects.get(station_name="Ellis Ave & 60th St")
+            except Exception as e:
+                # For testing purposes where no Station is present.
+                s = Station(station_name="Default station", station_address="default", station_lat=float(0.000), station_long=float(0.000))
+                s.save()
+            
             up = UserProfile (
                     user = user,
                     email=form.cleaned_data['email'],
@@ -61,6 +67,7 @@ def changed_home_station(request):
         'currenthomes': homestations
         })
 
+@login_required
 def select_home_station(request):
     if request.method == 'POST':
         form = HomeStationSelectionForm(request.POST)

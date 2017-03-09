@@ -12,8 +12,8 @@ class UserAuthenticationTests(TestCase):
     def test_template_availability(self):
         self.assertEqual(self.client.get('/').status_code, 200)
         self.assertEqual(self.client.get('/register/').status_code, 200)
-        self.assertEqual(self.client.get('/registration/select_home_station/').status_code, 200)
         # login required pages are not available
+        self.assertEqual(self.client.get('/registration/select_home_station/').status_code, 302)
         self.assertEqual(self.client.get('/home_page/').status_code, 302)
 
     def test_user_creation(self):
